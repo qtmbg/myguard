@@ -1,0 +1,414 @@
+{
+  "plugin": "vendorguard",
+  "tested_at": "2026-10-05T17:50:36.141201+00:00",
+  "endpoint": "https://money-plugins-qtmbg.vercel.app/api/vendorguard/mcp",
+  "test_mode": "direct production MCP; conversational activation and refusal not tested",
+  "initialize": {
+    "status": 200,
+    "latency_ms": 5847,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "vendorguard",
+          "version": "1.0.0"
+        },
+        "instructions": "VendorGuard compares commercial quotes and hidden cost drivers. It does not invent missing fees or contractual terms."
+      }
+    },
+    "request_id": "cle1::iad1::6m89c-1791222641917-8a5c925917e1"
+  },
+  "tools": {
+    "status": 200,
+    "latency_ms": 5763,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "normalize_vendor_quote",
+            "description": "Normalize a vendor quote into total cost of ownership over a stated term using only supplied commercial assumptions. Use once per vendor before comparing options.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "term_months"
+              ],
+              "properties": {
+                "currency": {
+                  "type": "string"
+                },
+                "term_months": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 1200
+                },
+                "one_time_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "implementation_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "migration_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "monthly_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "estimated_monthly_usage_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "monthly_support_fee": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "annual_price_increase_percent": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "expected_exit_cost": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "normalize vendor quote",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    "request_id": "cle1::iad1::vdxtk-1791222647697-51db801d433c"
+  },
+  "positive": [
+    {
+      "index": 1,
+      "tool": "normalize_vendor_quote",
+      "arguments": {
+        "term_months": 12,
+        "one_time_fee": 1000,
+        "monthly_fee": 500
+      },
+      "expected_fields": {
+        "total_cost_of_ownership": 7000
+      },
+      "prompt": "Vendor A charges $1,000 setup plus $500 per month for 12 months. What is the real cost?\n\nSynthetic reviewer inputs: {\"monthly_fee\": 500, \"one_time_fee\": 1000, \"term_months\": 12}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6868,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"term_months\":12,\"one_time_cost\":1000,\"recurring_cost\":6000,\"expected_exit_cost\":0,\"total_cost_of_ownership\":7000,\"effective_monthly_cost\":583.33,\"note\":\"TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "term_months": 12,
+              "one_time_cost": 1000,
+              "recurring_cost": 6000,
+              "expected_exit_cost": 0,
+              "total_cost_of_ownership": 7000,
+              "effective_monthly_cost": 583.33,
+              "note": "TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::q9xjz-1791222654567-5b720d49a603"
+      },
+      "pass_": true
+    },
+    {
+      "index": 2,
+      "tool": "normalize_vendor_quote",
+      "arguments": {
+        "term_months": 24,
+        "implementation_fee": 15000,
+        "monthly_fee": 2000
+      },
+      "expected_fields": {
+        "total_cost_of_ownership": 63000
+      },
+      "prompt": "Quote is $15k implementation plus $2k per month for 24 months.\n\nSynthetic reviewer inputs: {\"implementation_fee\": 15000, \"monthly_fee\": 2000, \"term_months\": 24}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6291,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"term_months\":24,\"one_time_cost\":15000,\"recurring_cost\":48000,\"expected_exit_cost\":0,\"total_cost_of_ownership\":63000,\"effective_monthly_cost\":2625,\"note\":\"TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "term_months": 24,
+              "one_time_cost": 15000,
+              "recurring_cost": 48000,
+              "expected_exit_cost": 0,
+              "total_cost_of_ownership": 63000,
+              "effective_monthly_cost": 2625,
+              "note": "TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::kphvm-1791222660854-4034ea6060fc"
+      },
+      "pass_": true
+    },
+    {
+      "index": 3,
+      "tool": "normalize_vendor_quote",
+      "arguments": {
+        "term_months": 24,
+        "monthly_fee": 1000,
+        "annual_price_increase_percent": 10
+      },
+      "expected_fields": {
+        "total_cost_of_ownership": 25200
+      },
+      "prompt": "Monthly fee is $1,000 with a 10% annual increase over 24 months.\n\nSynthetic reviewer inputs: {\"annual_price_increase_percent\": 10, \"monthly_fee\": 1000, \"term_months\": 24}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 7043,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"term_months\":24,\"one_time_cost\":0,\"recurring_cost\":25200,\"expected_exit_cost\":0,\"total_cost_of_ownership\":25200,\"effective_monthly_cost\":1050,\"note\":\"TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "term_months": 24,
+              "one_time_cost": 0,
+              "recurring_cost": 25200,
+              "expected_exit_cost": 0,
+              "total_cost_of_ownership": 25200,
+              "effective_monthly_cost": 1050,
+              "note": "TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::v7gpw-1791222667914-aca8ef3aa420"
+      },
+      "pass_": true
+    },
+    {
+      "index": 4,
+      "tool": "normalize_vendor_quote",
+      "arguments": {
+        "term_months": 12,
+        "monthly_fee": 800,
+        "estimated_monthly_usage_fee": 300,
+        "monthly_support_fee": 200
+      },
+      "expected_fields": {
+        "total_cost_of_ownership": 15600
+      },
+      "prompt": "Base is $800/month plus an estimated $300/month in usage and $200 support.\n\nSynthetic reviewer inputs: {\"estimated_monthly_usage_fee\": 300, \"monthly_fee\": 800, \"monthly_support_fee\": 200, \"term_months\": 12}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6677,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"term_months\":12,\"one_time_cost\":0,\"recurring_cost\":15600,\"expected_exit_cost\":0,\"total_cost_of_ownership\":15600,\"effective_monthly_cost\":1300,\"note\":\"TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "term_months": 12,
+              "one_time_cost": 0,
+              "recurring_cost": 15600,
+              "expected_exit_cost": 0,
+              "total_cost_of_ownership": 15600,
+              "effective_monthly_cost": 1300,
+              "note": "TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::7gd9z-1791222674581-1c1982bd008a"
+      },
+      "pass_": true
+    },
+    {
+      "index": 5,
+      "tool": "normalize_vendor_quote",
+      "arguments": {
+        "term_months": 36,
+        "monthly_fee": 1000,
+        "expected_exit_cost": 5000
+      },
+      "expected_fields": {
+        "total_cost_of_ownership": 41000
+      },
+      "prompt": "This vendor has a $5,000 expected migration cost at exit. Compare over 36 months.\n\nSynthetic reviewer inputs: {\"expected_exit_cost\": 5000, \"monthly_fee\": 1000, \"term_months\": 36}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 8763,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"term_months\":36,\"one_time_cost\":0,\"recurring_cost\":36000,\"expected_exit_cost\":5000,\"total_cost_of_ownership\":41000,\"effective_monthly_cost\":1138.89,\"note\":\"TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "term_months": 36,
+              "one_time_cost": 0,
+              "recurring_cost": 36000,
+              "expected_exit_cost": 5000,
+              "total_cost_of_ownership": 41000,
+              "effective_monthly_cost": 1138.89,
+              "note": "TCO uses only the supplied commercial assumptions. Compare scope coverage, service levels, exclusions, renewal terms, usage caps, and lock-in separately."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::hlvd8-1791222683355-b0a227f7a84f"
+      },
+      "pass_": true
+    }
+  ],
+  "negative_input_validation": [
+    {
+      "arguments": {
+        "term_months": 12,
+        "one_time_fee": 1000,
+        "monthly_fee": 500,
+        "unexpected_field": "invalid"
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 6237,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.unexpected_field: unsupported field"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::cgprg-1791222689595-ae0bacc5ce1f"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "one_time_fee": 1000,
+        "monthly_fee": 500
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 6363,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.term_months: required"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::7w4q8-1791222695923-5e70d8f2f887"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "term_months": "wrong type",
+        "one_time_fee": 1000,
+        "monthly_fee": 500
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5587,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.term_months: expected number"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::2k527-1791222701539-5830229125a0"
+      },
+      "pass_": true
+    }
+  ],
+  "conversational_negative": [
+    {
+      "description": "Invent omitted fees",
+      "prompt": "Guess the implementation and migration fees because the quote does not say.",
+      "expected_behavior": "Do not invent missing commercial terms.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Legal enforceability",
+      "prompt": "Tell me if this auto-renewal clause is legally enforceable.",
+      "expected_behavior": "Do not provide a legal enforceability conclusion.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Unrelated travel claim",
+      "prompt": "My flight was cancelled. Am I owed compensation?",
+      "expected_behavior": "Do not activate VendorGuard for travel claims.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    }
+  ]
+}

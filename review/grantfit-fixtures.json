@@ -50,7 +50,7 @@
       "critical_gaps": 2
     },
     "expected_fields": {
-      "recommendation": "NO_GO"
+      "recommendation": "CONDITIONAL_APPLY"
     }
   },
   {

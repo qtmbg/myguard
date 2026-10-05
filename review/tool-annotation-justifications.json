@@ -1,0 +1,249 @@
+{
+  "assess_overdue_invoice": {
+    "plugin": "invoicechaser",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "score_grant_opportunity": {
+    "plugin": "grantfit",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "normalize_vendor_quote": {
+    "plugin": "vendorguard",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "classify_spend_leak": {
+    "plugin": "cashleak",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "assess_refund_case": {
+    "plugin": "refundradar",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "calculate_potential_recovery": {
+    "plugin": "refundradar",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "score_bid_opportunity": {
+    "plugin": "bidready",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "summarize_travel_disruption": {
+    "plugin": "travelclaim",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "calculate_documented_travel_expenses": {
+    "plugin": "travelclaim",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "evaluate_deal_economics": {
+    "plugin": "dealdesk",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "assess_renewal": {
+    "plugin": "renewalradar",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "price_scope": {
+    "plugin": "scopeguard",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  },
+  "price_scope_change": {
+    "plugin": "scopeguard",
+    "readOnlyHint": {
+      "value": true,
+      "justification": "Pure calculation from supplied input. No persistent user data is read or changed."
+    },
+    "destructiveHint": {
+      "value": false,
+      "justification": "Does not delete or modify records, cancel contracts, send messages, or initiate transactions."
+    },
+    "openWorldHint": {
+      "value": false,
+      "justification": "Tool performs local deterministic math only, without calling external systems. Official policy checks are separate agent workflow steps."
+    },
+    "idempotentHint": {
+      "value": true,
+      "justification": "Same supplied inputs give the same result. Technical telemetry does not change the calculation."
+    }
+  }
+}

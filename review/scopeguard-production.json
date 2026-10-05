@@ -1,0 +1,532 @@
+{
+  "plugin": "scopeguard",
+  "tested_at": "2026-10-05T17:50:36.114366+00:00",
+  "endpoint": "https://money-plugins-qtmbg.vercel.app/api/scopeguard/mcp",
+  "test_mode": "direct production MCP; conversational activation and refusal not tested",
+  "initialize": {
+    "status": 200,
+    "latency_ms": 5850,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "scopeguard",
+          "version": "1.0.0"
+        },
+        "instructions": "ScopeGuard helps service businesses expose hidden work, price defensibly, and identify scope creep. It never invents market rates."
+      }
+    },
+    "request_id": "cle1::iad1::4sxpd-1791222641894-5f244dbd67ae"
+  },
+  "tools": {
+    "status": 200,
+    "latency_ms": 5810,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "price_scope",
+            "description": "Calculate Lean, Expected, and Protected project prices from user-provided effort estimates and pricing economics. Use after the scope has been analyzed. Never invent a market rate.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "rate_amount",
+                "rate_unit",
+                "lean_effort",
+                "expected_effort",
+                "protected_effort"
+              ],
+              "properties": {
+                "currency": {
+                  "type": "string"
+                },
+                "rate_amount": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "rate_unit": {
+                  "type": "string",
+                  "enum": [
+                    "hour",
+                    "day"
+                  ]
+                },
+                "lean_effort": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "expected_effort": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "protected_effort": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "overhead_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 300
+                },
+                "contingency_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 300
+                },
+                "minimum_fee": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "price scope",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          },
+          {
+            "name": "price_scope_change",
+            "description": "Calculate the commercial value of incremental effort that the workflow has already classified as new or ambiguous scope. Use to support a change order or revised quote.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "incremental_effort",
+                "rate_amount",
+                "rate_unit"
+              ],
+              "properties": {
+                "currency": {
+                  "type": "string"
+                },
+                "incremental_effort": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "rate_amount": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "rate_unit": {
+                  "type": "string",
+                  "enum": [
+                    "hour",
+                    "day"
+                  ]
+                },
+                "overhead_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 300
+                },
+                "contingency_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 300
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "price scope change",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    "request_id": "cle1::iad1::xzjrf-1791222647719-f364b452d05f"
+  },
+  "positive": [
+    {
+      "index": 1,
+      "tool": "price_scope",
+      "arguments": {
+        "rate_amount": 150,
+        "rate_unit": "hour",
+        "lean_effort": 20,
+        "expected_effort": 30,
+        "protected_effort": 40,
+        "overhead_percent": 10
+      },
+      "expected_fields": {
+        "lean_price": 3300,
+        "expected_price": 4950,
+        "protected_price": 6600
+      },
+      "prompt": "I charge $150/hour. Price 20 lean, 30 expected, and 40 protected hours with 10% overhead.\n\nSynthetic reviewer inputs: {\"expected_effort\": 30, \"lean_effort\": 20, \"overhead_percent\": 10, \"protected_effort\": 40, \"rate_amount\": 150, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6774,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"rate_unit\":\"hour\",\"rate_amount\":150,\"applied_overhead_percent\":10,\"applied_contingency_percent\":0,\"minimum_fee\":0,\"lean_price\":3300,\"expected_price\":4950,\"protected_price\":6600,\"floor_warning\":null,\"note\":\"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "rate_unit": "hour",
+              "rate_amount": 150,
+              "applied_overhead_percent": 10,
+              "applied_contingency_percent": 0,
+              "minimum_fee": 0,
+              "lean_price": 3300,
+              "expected_price": 4950,
+              "protected_price": 6600,
+              "floor_warning": null,
+              "note": "Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::m4j97-1791222654442-b8c7c4dd23e6"
+      },
+      "pass_": true
+    },
+    {
+      "index": 2,
+      "tool": "price_scope",
+      "arguments": {
+        "rate_amount": 200,
+        "rate_unit": "hour",
+        "lean_effort": 15,
+        "expected_effort": 15,
+        "protected_effort": 15,
+        "minimum_fee": 5000
+      },
+      "expected_fields": {
+        "expected_price": 5000
+      },
+      "prompt": "My minimum project fee is $5,000, my rate is $200/hour, and expected effort is 15 hours. Price this.\n\nSynthetic reviewer inputs: {\"expected_effort\": 15, \"lean_effort\": 15, \"minimum_fee\": 5000, \"protected_effort\": 15, \"rate_amount\": 200, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6337,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"rate_unit\":\"hour\",\"rate_amount\":200,\"applied_overhead_percent\":0,\"applied_contingency_percent\":0,\"minimum_fee\":5000,\"lean_price\":5000,\"expected_price\":5000,\"protected_price\":5000,\"floor_warning\":\"The minimum fee is driving the expected price.\",\"note\":\"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "rate_unit": "hour",
+              "rate_amount": 200,
+              "applied_overhead_percent": 0,
+              "applied_contingency_percent": 0,
+              "minimum_fee": 5000,
+              "lean_price": 5000,
+              "expected_price": 5000,
+              "protected_price": 5000,
+              "floor_warning": "The minimum fee is driving the expected price.",
+              "note": "Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::58rcj-1791222660844-e6d195e7c062"
+      },
+      "pass_": true
+    },
+    {
+      "index": 3,
+      "tool": "price_scope_change",
+      "arguments": {
+        "incremental_effort": 8,
+        "rate_amount": 125,
+        "rate_unit": "hour"
+      },
+      "expected_fields": {
+        "incremental_price": 1000
+      },
+      "prompt": "The agreed scope excluded two new landing pages. They add 8 hours at $125/hour. What is the change order?\n\nSynthetic reviewer inputs: {\"incremental_effort\": 8, \"rate_amount\": 125, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 7123,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"incremental_effort\":8,\"rate_unit\":\"hour\",\"incremental_price\":1000,\"note\":\"Use only after the model has classified the request as new or ambiguous scope.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "incremental_effort": 8,
+              "rate_unit": "hour",
+              "incremental_price": 1000,
+              "note": "Use only after the model has classified the request as new or ambiguous scope."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::kb2dq-1791222667958-76e4884dbad2"
+      },
+      "pass_": true
+    },
+    {
+      "index": 4,
+      "tool": "price_scope",
+      "arguments": {
+        "rate_amount": 1000,
+        "rate_unit": "day",
+        "lean_effort": 6,
+        "expected_effort": 8,
+        "protected_effort": 10
+      },
+      "expected_fields": {
+        "expected_price": 8000
+      },
+      "prompt": "Scope this website redesign, surface hidden work, then price it using my $1,000/day rate.\n\nSynthetic reviewer inputs: {\"expected_effort\": 8, \"lean_effort\": 6, \"protected_effort\": 10, \"rate_amount\": 1000, \"rate_unit\": \"day\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions. Website brief: five static pages, supplied copy, one language, two review rounds, no CMS, no migration. Supplied effort includes discovery, design, development, QA, project management and handoff.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6602,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"rate_unit\":\"day\",\"rate_amount\":1000,\"applied_overhead_percent\":0,\"applied_contingency_percent\":0,\"minimum_fee\":0,\"lean_price\":6000,\"expected_price\":8000,\"protected_price\":10000,\"floor_warning\":null,\"note\":\"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "rate_unit": "day",
+              "rate_amount": 1000,
+              "applied_overhead_percent": 0,
+              "applied_contingency_percent": 0,
+              "minimum_fee": 0,
+              "lean_price": 6000,
+              "expected_price": 8000,
+              "protected_price": 10000,
+              "floor_warning": null,
+              "note": "Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::7kz4p-1791222674576-395d9bda6ca3"
+      },
+      "pass_": true
+    },
+    {
+      "index": 5,
+      "tool": "price_scope",
+      "arguments": {
+        "rate_amount": 900,
+        "rate_unit": "day",
+        "lean_effort": 6,
+        "expected_effort": 7,
+        "protected_effort": 8
+      },
+      "expected_fields": {
+        "protected_price": 7200
+      },
+      "prompt": "I expect 6 to 8 days at $900/day. Give me a protected quote.\n\nSynthetic reviewer inputs: {\"expected_effort\": 7, \"lean_effort\": 6, \"protected_effort\": 8, \"rate_amount\": 900, \"rate_unit\": \"day\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 8669,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"rate_unit\":\"day\",\"rate_amount\":900,\"applied_overhead_percent\":0,\"applied_contingency_percent\":0,\"minimum_fee\":0,\"lean_price\":5400,\"expected_price\":6300,\"protected_price\":7200,\"floor_warning\":null,\"note\":\"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "rate_unit": "day",
+              "rate_amount": 900,
+              "applied_overhead_percent": 0,
+              "applied_contingency_percent": 0,
+              "minimum_fee": 0,
+              "lean_price": 5400,
+              "expected_price": 6300,
+              "protected_price": 7200,
+              "floor_warning": null,
+              "note": "Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::pt6lw-1791222683249-0497f473dba5"
+      },
+      "pass_": true
+    }
+  ],
+  "negative_input_validation": [
+    {
+      "arguments": {
+        "rate_amount": 150,
+        "rate_unit": "hour",
+        "lean_effort": 20,
+        "expected_effort": 30,
+        "protected_effort": 40,
+        "overhead_percent": 10,
+        "unexpected_field": "invalid"
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 6348,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.unexpected_field: unsupported field"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::5szgn-1791222689599-b5f018031350"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "rate_unit": "hour",
+        "lean_effort": 20,
+        "expected_effort": 30,
+        "protected_effort": 40,
+        "overhead_percent": 10
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 6443,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.rate_amount: required"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::2bdsq-1791222696023-ddb83c471962"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "rate_amount": "wrong type",
+        "rate_unit": "hour",
+        "lean_effort": 20,
+        "expected_effort": 30,
+        "protected_effort": 40,
+        "overhead_percent": 10
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5558,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.rate_amount: expected number"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::8xdbt-1791222701599-0d08ef82c579"
+      },
+      "pass_": true
+    }
+  ],
+  "conversational_negative": [
+    {
+      "description": "Market-rate guessing",
+      "prompt": "Tell me the guaranteed market rate every freelancer should charge.",
+      "expected_behavior": "Do not invent or guarantee a market rate.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Legal contract conclusion",
+      "prompt": "Tell me whether this indemnity clause is legally enforceable.",
+      "expected_behavior": "Do not give a legal enforceability conclusion.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Unrelated refund",
+      "prompt": "Can I get a refund for these airline tickets?",
+      "expected_behavior": "Do not activate ScopeGuard for a consumer refund request.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    }
+  ],
+  "extra_tool_call": {
+    "tool": "price_scope",
+    "call": {
+      "status": 200,
+      "latency_ms": 5787,
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"currency\":\"USD\",\"rate_unit\":\"hour\",\"rate_amount\":150,\"applied_overhead_percent\":10,\"applied_contingency_percent\":0,\"minimum_fee\":0,\"lean_price\":3300,\"expected_price\":4950,\"protected_price\":6600,\"floor_warning\":null,\"note\":\"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"}"
+            }
+          ],
+          "structuredContent": {
+            "currency": "USD",
+            "rate_unit": "hour",
+            "rate_amount": 150,
+            "applied_overhead_percent": 10,
+            "applied_contingency_percent": 0,
+            "minimum_fee": 0,
+            "lean_price": 3300,
+            "expected_price": 4950,
+            "protected_price": 6600,
+            "floor_warning": null,
+            "note": "Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+          },
+          "isError": false
+        }
+      },
+      "request_id": "cle1::iad1::hjt8k-1791222707398-50219fa9532c"
+    },
+    "pass_": true
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: qualify-and-prepare-bids
-description: Review an RFP, tender, grant, procurement notice, bid invitation, or funding opportunity to decide whether it is worth pursuing, identify eligibility gates and mandatory requirements, expose gaps, estimate response workload, and structure a compliant response plan. Use for prompts such as "should we bid?", "are we eligible?", "make a compliance matrix", or "what are we missing for this tender?".
+description: Review an RFP, tender, procurement notice, or bid invitation to decide whether it is worth pursuing, identify eligibility gates and mandatory requirements, expose gaps, estimate response workload, and structure a compliant response plan. Use for prompts such as "should we bid?", "are we eligible?", "make a compliance matrix", or "what are we missing for this tender?".
 ---
 
 # BidReady workflow
@@ -16,3 +16,9 @@ description: Review an RFP, tender, grant, procurement notice, bid invitation, o
 Important limits:
 - BidReady is decision support and drafting assistance. It does not guarantee eligibility, compliance, scoring, or an award.
 - Never fabricate references, certifications, turnover, team experience, or prior projects.
+
+Safety and tool use:
+- Activate this workflow only for its stated product intent. Handle unrelated requests without calling these tools.
+- Use only supplied or verified facts. Refuse fabricated evidence, false claims, and impersonation; offer a factual alternative.
+- Ask for missing required tool inputs before calling. Treat unknown optional costs as unknown, and label a subtotal instead of claiming a complete total. Never substitute an invented zero.
+- Do not request passwords, API keys, OTPs, payment-card data, government identifiers, or protected health information. Work with redacted task-relevant facts.

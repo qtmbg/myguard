@@ -1,0 +1,9 @@
+{
+  "tested_at": "2026-10-05T17:53:04.139846+00:00",
+  "positive_pass": 50,
+  "positive_total": 50,
+  "input_rejection_pass": 30,
+  "input_rejection_total": 30,
+  "conversational_negative_executed": 0,
+  "official_scans_executed": 0
+}

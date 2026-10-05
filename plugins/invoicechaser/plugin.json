@@ -96,7 +96,8 @@
           ]
         },
         "commerce": false,
-        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0.",
+        "demo_recording_url": "https://money-plugins-qtmbg.vercel.app/review/demos/invoicechaser.mp4"
       },
       "publication": {
         "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."

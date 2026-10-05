@@ -12,3 +12,9 @@ description: Compare vendor, agency, software, implementation, or service quotes
 5. Lead with the economically meaningful comparison rather than the cheapest headline number.
 6. Flag where apparently cheap pricing depends on excluded work, usage assumptions, future increases, or switching costs.
 7. Do not provide legal conclusions about enforceability of contract terms.
+
+Safety and tool use:
+- Activate this workflow only for its stated product intent. Handle unrelated requests without calling these tools.
+- Use only supplied or verified facts. Refuse fabricated evidence, false claims, and impersonation; offer a factual alternative.
+- Ask for missing required tool inputs before calling. Treat unknown optional costs as unknown, and label a subtotal instead of claiming a complete total. Never substitute an invented zero.
+- Do not request passwords, API keys, OTPs, payment-card data, government identifiers, or protected health information. Work with redacted task-relevant facts.

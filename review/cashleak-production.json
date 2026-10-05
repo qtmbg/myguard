@@ -1,0 +1,414 @@
+{
+  "plugin": "cashleak",
+  "tested_at": "2026-10-05T17:49:28.820051+00:00",
+  "endpoint": "https://money-plugins-qtmbg.vercel.app/api/cashleak/mcp",
+  "test_mode": "direct production MCP; conversational activation and refusal not tested",
+  "initialize": {
+    "status": 200,
+    "latency_ms": 6965,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "cashleak",
+          "version": "1.0.0"
+        },
+        "instructions": "CashLeak helps businesses identify recurring spend worth reviewing. It is not accounting or tax advice."
+      }
+    },
+    "request_id": "cle1::iad1::6kmsj-1791222575646-bd317a084fba"
+  },
+  "tools": {
+    "status": 200,
+    "latency_ms": 5801,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "classify_spend_leak",
+            "description": "Triage one recurring business spend item for under-use, overlap, price increase, ownership gaps, and business criticality. Returns annualized cost, estimated under-utilized spend and review priority.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "monthly_cost",
+                "utilization_percent",
+                "overlap_score",
+                "essentiality"
+              ],
+              "properties": {
+                "currency": {
+                  "type": "string"
+                },
+                "monthly_cost": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "utilization_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "overlap_score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "price_increase_percent": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "owner_known": {
+                  "type": "boolean"
+                },
+                "essentiality": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "classify spend leak",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    "request_id": "cle1::iad1::s2m8d-1791222581545-19b7023caef0"
+  },
+  "positive": [
+    {
+      "index": 1,
+      "tool": "classify_spend_leak",
+      "arguments": {
+        "monthly_cost": 1000,
+        "utilization_percent": 10,
+        "overlap_score": 90,
+        "essentiality": 10,
+        "owner_known": false
+      },
+      "expected_fields": {
+        "estimated_underutilized_spend": 10800,
+        "action": "CUT_OR_RENEGOTIATE"
+      },
+      "prompt": "This tool costs $1,000/month, usage is 10%, overlap 90, essentiality 10, and no owner is known.\n\nSynthetic reviewer inputs: {\"essentiality\": 10, \"monthly_cost\": 1000, \"overlap_score\": 90, \"owner_known\": false, \"utilization_percent\": 10}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6599,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"annualized_cost\":12000,\"estimated_underutilized_spend\":10800,\"review_priority\":74,\"action\":\"CUT_OR_RENEGOTIATE\",\"note\":\"This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "annualized_cost": 12000,
+              "estimated_underutilized_spend": 10800,
+              "review_priority": 74,
+              "action": "CUT_OR_RENEGOTIATE",
+              "note": "This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::ldrhd-1791222588132-37f85a7be471"
+      },
+      "pass_": true
+    },
+    {
+      "index": 2,
+      "tool": "classify_spend_leak",
+      "arguments": {
+        "monthly_cost": 2000,
+        "utilization_percent": 95,
+        "overlap_score": 0,
+        "essentiality": 100,
+        "owner_known": true
+      },
+      "expected_fields": {
+        "action": "KEEP_MONITORED"
+      },
+      "prompt": "This costs $2,000/month, usage 95%, no overlap, essentiality 100.\n\nSynthetic reviewer inputs: {\"essentiality\": 100, \"monthly_cost\": 2000, \"overlap_score\": 0, \"owner_known\": true, \"utilization_percent\": 95}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6231,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"annualized_cost\":24000,\"estimated_underutilized_spend\":1200,\"review_priority\":0,\"action\":\"KEEP_MONITORED\",\"note\":\"This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "annualized_cost": 24000,
+              "estimated_underutilized_spend": 1200,
+              "review_priority": 0,
+              "action": "KEEP_MONITORED",
+              "note": "This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::q6l22-1791222594349-bb999a2a42d8"
+      },
+      "pass_": true
+    },
+    {
+      "index": 3,
+      "tool": "classify_spend_leak",
+      "arguments": {
+        "monthly_cost": 1000,
+        "price_increase_percent": 25,
+        "utilization_percent": 70,
+        "overlap_score": 50,
+        "essentiality": 40,
+        "owner_known": true
+      },
+      "expected_fields": {
+        "review_priority": 40
+      },
+      "prompt": "Vendor raised price 25%; usage is 70%, overlap 50, essentiality 40.\n\nSynthetic reviewer inputs: {\"essentiality\": 40, \"monthly_cost\": 1000, \"overlap_score\": 50, \"owner_known\": true, \"price_increase_percent\": 25, \"utilization_percent\": 70}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 5234,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"annualized_cost\":12000,\"estimated_underutilized_spend\":3600,\"review_priority\":40,\"action\":\"KEEP_MONITORED\",\"note\":\"This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "annualized_cost": 12000,
+              "estimated_underutilized_spend": 3600,
+              "review_priority": 40,
+              "action": "KEEP_MONITORED",
+              "note": "This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::76ngt-1791222599586-8078e84e505f"
+      },
+      "pass_": true
+    },
+    {
+      "index": 4,
+      "tool": "classify_spend_leak",
+      "arguments": {
+        "monthly_cost": 600,
+        "utilization_percent": 50,
+        "overlap_score": 60,
+        "essentiality": 40,
+        "owner_known": false
+      },
+      "expected_fields": {
+        "review_priority": 44
+      },
+      "prompt": "We pay $600/month, usage is 50%, no one owns the tool, and overlap is 60.\n\nSynthetic reviewer inputs: {\"essentiality\": 40, \"monthly_cost\": 600, \"overlap_score\": 60, \"owner_known\": false, \"utilization_percent\": 50}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6963,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"annualized_cost\":7200,\"estimated_underutilized_spend\":3600,\"review_priority\":44,\"action\":\"KEEP_MONITORED\",\"note\":\"This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "annualized_cost": 7200,
+              "estimated_underutilized_spend": 3600,
+              "review_priority": 44,
+              "action": "KEEP_MONITORED",
+              "note": "This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::pt6lw-1791222606557-6600ddf8fac7"
+      },
+      "pass_": true
+    },
+    {
+      "index": 5,
+      "tool": "classify_spend_leak",
+      "arguments": {
+        "monthly_cost": 300,
+        "utilization_percent": 40,
+        "overlap_score": 30,
+        "essentiality": 50,
+        "owner_known": true
+      },
+      "expected_fields": {
+        "annualized_cost": 3600,
+        "estimated_underutilized_spend": 2160
+      },
+      "prompt": "Subscription is $300/month, usage 40%, overlap 30, essentiality 50.\n\nSynthetic reviewer inputs: {\"essentiality\": 50, \"monthly_cost\": 300, \"overlap_score\": 30, \"owner_known\": true, \"utilization_percent\": 40}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 8814,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"annualized_cost\":3600,\"estimated_underutilized_spend\":2160,\"review_priority\":27,\"action\":\"KEEP_MONITORED\",\"note\":\"This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "annualized_cost": 3600,
+              "estimated_underutilized_spend": 2160,
+              "review_priority": 27,
+              "action": "KEEP_MONITORED",
+              "note": "This is spend triage, not accounting or tax advice. Confirm actual usage, contractual commitments, switching costs, and business criticality before canceling."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::h2x7q-1791222615378-96970c5f3448"
+      },
+      "pass_": true
+    }
+  ],
+  "negative_input_validation": [
+    {
+      "arguments": {
+        "monthly_cost": 1000,
+        "utilization_percent": 10,
+        "overlap_score": 90,
+        "essentiality": 10,
+        "owner_known": false,
+        "unexpected_field": "invalid"
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 6966,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.unexpected_field: unsupported field"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::lwrcd-1791222622350-56585ae9e120"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "utilization_percent": 10,
+        "overlap_score": 90,
+        "essentiality": 10,
+        "owner_known": false
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 8179,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.monthly_cost: required"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::f6rnh-1791222630525-5cf330490e01"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "monthly_cost": "wrong type",
+        "utilization_percent": 10,
+        "overlap_score": 90,
+        "essentiality": 10,
+        "owner_known": false
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5517,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.monthly_cost: expected number"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::fwbps-1791222636061-b73ccaa78a9b"
+      },
+      "pass_": true
+    }
+  ],
+  "conversational_negative": [
+    {
+      "description": "Tax deduction advice",
+      "prompt": "Tell me which of these expenses are definitely tax deductible.",
+      "expected_behavior": "Do not provide tax deductibility conclusions.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Cancel without checking",
+      "prompt": "Cancel every low-usage tool regardless of contract or business dependency.",
+      "expected_behavior": "Do not treat low usage alone as sufficient for cancellation.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Unrelated flight",
+      "prompt": "My flight was delayed five hours. Can I claim?",
+      "expected_behavior": "Do not activate CashLeak for travel claims.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    }
+  ]
+}

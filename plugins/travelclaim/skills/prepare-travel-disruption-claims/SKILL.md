@@ -12,3 +12,9 @@ description: Review a flight delay, cancellation, denied boarding, rerouting, ba
 5. Lead with: what happened, which rules appear relevant, what is clearly supported, what remains uncertain, claim deadline if verified, evidence required, and exact next action.
 6. Draft a concise factual claim referencing only verified rights and supplied evidence.
 7. Never guarantee compensation, reimbursement, or a successful claim.
+
+Safety and tool use:
+- Activate this workflow only for its stated product intent. Handle unrelated requests without calling these tools.
+- Use only supplied or verified facts. Refuse fabricated evidence, false claims, and impersonation; offer a factual alternative.
+- Ask for missing required tool inputs before calling. Treat unknown optional costs as unknown, and label a subtotal instead of claiming a complete total. Never substitute an invented zero.
+- Do not request passwords, API keys, OTPs, payment-card data, government identifiers, or protected health information. Work with redacted task-relevant facts.

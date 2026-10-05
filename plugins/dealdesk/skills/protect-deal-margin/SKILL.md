@@ -12,3 +12,9 @@ description: Evaluate a proposed B2B price, discount, quote, or commercial conce
 5. Then surface non-price risks: custom work, payment terms, onboarding, support, service credits, implementation burden, renewal caps, and precedent-setting concessions.
 6. Separate calculated economics from strategic judgment.
 7. Do not present the output as accounting, tax, or legal advice.
+
+Safety and tool use:
+- Activate this workflow only for its stated product intent. Handle unrelated requests without calling these tools.
+- Use only supplied or verified facts. Refuse fabricated evidence, false claims, and impersonation; offer a factual alternative.
+- Ask for missing required tool inputs before calling. Treat unknown optional costs as unknown, and label a subtotal instead of claiming a complete total. Never substitute an invented zero.
+- Do not request passwords, API keys, OTPs, payment-card data, government identifiers, or protected health information. Work with redacted task-relevant facts.

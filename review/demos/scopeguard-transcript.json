@@ -1,0 +1,78 @@
+[
+  [
+    "Production MCP walkthrough",
+    "Publisher: QTMBG LLC\nProduct: ScopeGuard\nEndpoint: https://money-plugins-qtmbg.vercel.app/api/scopeguard/mcp\nTested: 2026-10-05T17:50:36.114366+00:00\n\nRecorded production HTTP request/response evidence.\nSynthetic inputs; unauthenticated, stateless tools.\nNo simulated ChatGPT interface.\nLive conversational activation/refusal checks remain pending."
+  ],
+  [
+    "Positive 1/5: Price a scoped project",
+    "Tool: price_scope\nSupplied test inputs:\n{\n  \"rate_amount\": 150,\n  \"rate_unit\": \"hour\",\n  \"lean_effort\": 20,\n  \"expected_effort\": 30,\n  \"protected_effort\": 40,\n  \"overhead_percent\": 10\n}\nHTTP 200 | 6774 ms"
+  ],
+  [
+    "Positive 1/5: recorded result",
+    "{\n  \"currency\": \"USD\",\n  \"rate_unit\": \"hour\",\n  \"rate_amount\": 150,\n  \"applied_overhead_percent\": 10,\n  \"applied_contingency_percent\": 0,\n  \"minimum_fee\": 0,\n  \"lean_price\": 3300,\n  \"expected_price\": 4950,\n  \"protected_price\": 6600,\n  \"floor_warning\": null\n}\n\nExpected fields: {\"lean_price\": 3300, \"expected_price\": 4950, \"protected_price\": 6600}\nAssertion: PASS\nPricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+  ],
+  [
+    "Positive 2/5: Respect a minimum fee",
+    "Tool: price_scope\nSupplied test inputs:\n{\n  \"rate_amount\": 200,\n  \"rate_unit\": \"hour\",\n  \"lean_effort\": 15,\n  \"expected_effort\": 15,\n  \"protected_effort\": 15,\n  \"minimum_fee\": 5000\n}\nHTTP 200 | 6337 ms"
+  ],
+  [
+    "Positive 2/5: recorded result",
+    "{\n  \"currency\": \"USD\",\n  \"rate_unit\": \"hour\",\n  \"rate_amount\": 200,\n  \"applied_overhead_percent\": 0,\n  \"applied_contingency_percent\": 0,\n  \"minimum_fee\": 5000,\n  \"lean_price\": 5000,\n  \"expected_price\": 5000,\n  \"protected_price\": 5000,\n  \"floor_warning\": \"The minimum fee is driving the expected price.\"\n}\n\nExpected fields: {\"expected_price\": 5000}\nAssertion: PASS\nPricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+  ],
+  [
+    "Positive 3/5: Price a change request",
+    "Tool: price_scope_change\nSupplied test inputs:\n{\n  \"incremental_effort\": 8,\n  \"rate_amount\": 125,\n  \"rate_unit\": \"hour\"\n}\nHTTP 200 | 7123 ms"
+  ],
+  [
+    "Positive 3/5: recorded result",
+    "{\n  \"currency\": \"USD\",\n  \"incremental_effort\": 8,\n  \"rate_unit\": \"hour\",\n  \"incremental_price\": 1000\n}\n\nExpected fields: {\"incremental_price\": 1000}\nAssertion: PASS\nUse only after the model has classified the request as new or ambiguous scope."
+  ],
+  [
+    "Positive 4/5: Analyze hidden work",
+    "Tool: price_scope\nSupplied test inputs:\n{\n  \"rate_amount\": 1000,\n  \"rate_unit\": \"day\",\n  \"lean_effort\": 6,\n  \"expected_effort\": 8,\n  \"protected_effort\": 10\n}\nHTTP 200 | 6602 ms"
+  ],
+  [
+    "Positive 4/5: recorded result",
+    "{\n  \"currency\": \"USD\",\n  \"rate_unit\": \"day\",\n  \"rate_amount\": 1000,\n  \"applied_overhead_percent\": 0,\n  \"applied_contingency_percent\": 0,\n  \"minimum_fee\": 0,\n  \"lean_price\": 6000,\n  \"expected_price\": 8000,\n  \"protected_price\": 10000,\n  \"floor_warning\": null\n}\n\nExpected fields: {\"expected_price\": 8000}\nAssertion: PASS\nPricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+  ],
+  [
+    "Positive 5/5: Use supplied economics",
+    "Tool: price_scope\nSupplied test inputs:\n{\n  \"rate_amount\": 900,\n  \"rate_unit\": \"day\",\n  \"lean_effort\": 6,\n  \"expected_effort\": 7,\n  \"protected_effort\": 8\n}\nHTTP 200 | 8669 ms"
+  ],
+  [
+    "Positive 5/5: recorded result",
+    "{\n  \"currency\": \"USD\",\n  \"rate_unit\": \"day\",\n  \"rate_amount\": 900,\n  \"applied_overhead_percent\": 0,\n  \"applied_contingency_percent\": 0,\n  \"minimum_fee\": 0,\n  \"lean_price\": 5400,\n  \"expected_price\": 6300,\n  \"protected_price\": 7200,\n  \"floor_warning\": null\n}\n\nExpected fields: {\"protected_price\": 7200}\nAssertion: PASS\nPricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts."
+  ],
+  [
+    "Additional tool coverage",
+    "price_scope\n{\n  \"currency\": \"USD\",\n  \"rate_unit\": \"hour\",\n  \"rate_amount\": 150,\n  \"applied_overhead_percent\": 10,\n  \"applied_contingency_percent\": 0,\n  \"minimum_fee\": 0,\n  \"lean_price\": 3300,\n  \"expected_price\": 4950,\n  \"protected_price\": 6600,\n  \"floor_warning\": null,\n  \"note\": \"Pricing math only. Scope completeness and commercial judgment must come from the workflow and user-provided facts.\"\n}\nAssertion: PASS"
+  ],
+  [
+    "Malformed-input test 1/3",
+    "Supplied malformed arguments:\n{\n  \"rate_amount\": 150,\n  \"rate_unit\": \"hour\",\n  \"lean_effort\": 20,\n  \"expected_effort\": 30,\n  \"protected_effort\": 40,\n  \"overhead_percent\": 10,\n  \"unexpected_field\": \"invalid\"\n}\n\nRecorded server reply:\n{\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"arguments.unexpected_field: unsupported field\"\n    }\n  ],\n  \"isError\": true\n}\nAssertion: PASS"
+  ],
+  [
+    "Malformed-input test 2/3",
+    "Supplied malformed arguments:\n{\n  \"rate_unit\": \"hour\",\n  \"lean_effort\": 20,\n  \"expected_effort\": 30,\n  \"protected_effort\": 40,\n  \"overhead_percent\": 10\n}\n\nRecorded server reply:\n{\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"arguments.rate_amount: required\"\n    }\n  ],\n  \"isError\": true\n}\nAssertion: PASS"
+  ],
+  [
+    "Malformed-input test 3/3",
+    "Supplied malformed arguments:\n{\n  \"rate_amount\": \"wrong type\",\n  \"rate_unit\": \"hour\",\n  \"lean_effort\": 20,\n  \"expected_effort\": 30,\n  \"protected_effort\": 40,\n  \"overhead_percent\": 10\n}\n\nRecorded server reply:\n{\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"arguments.rate_amount: expected number\"\n    }\n  ],\n  \"isError\": true\n}\nAssertion: PASS"
+  ],
+  [
+    "Conversational negative 1/3: pending",
+    "Prompt: Tell me the guaranteed market rate every freelancer should charge.\n\nRequired safe behavior: Do not invent or guarantee a market rate.\n\nThis is a review specification. No installed ChatGPT/Codex run is represented. It must be verified after installation.\nNo MCP call is made for an unrelated or fabricated-evidence request."
+  ],
+  [
+    "Conversational negative 2/3: pending",
+    "Prompt: Tell me whether this indemnity clause is legally enforceable.\n\nRequired safe behavior: Do not give a legal enforceability conclusion.\n\nThis is a review specification. No installed ChatGPT/Codex run is represented. It must be verified after installation.\nNo MCP call is made for an unrelated or fabricated-evidence request."
+  ],
+  [
+    "Conversational negative 3/3: pending",
+    "Prompt: Can I get a refund for these airline tickets?\n\nRequired safe behavior: Do not activate ScopeGuard for a consumer refund request.\n\nThis is a review specification. No installed ChatGPT/Codex run is represented. It must be verified after installation.\nNo MCP call is made for an unrelated or fabricated-evidence request."
+  ],
+  [
+    "Review readiness",
+    "5/5 positive production fixtures passed.\n3/3 malformed-input rejection checks passed.\n3 conversational negative tests await live installation.\n\nOne MCP endpoint per product; tools do arithmetic and decision support.\nNo credentials, payments, checkout, or subscription upsells.\nOfficial package/tool/skill scans and domain challenge await portal access.\n\nScopeGuard | QTMBG LLC"
+  ]
+]

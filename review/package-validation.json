@@ -1,0 +1,122 @@
+[
+  {
+    "plugin": "bidready",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "qualify-and-prepare-bids",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "cashleak",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "find-recurring-business-waste",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "dealdesk",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "protect-deal-margin",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "grantfit",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "qualify-grant-opportunities",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "invoicechaser",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "chase-overdue-invoices",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "refundradar",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "assess-refund-and-recovery-options",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "renewalradar",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "review-upcoming-renewals",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "scopeguard",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "scope-and-price-client-work",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "travelclaim",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "prepare-travel-disruption-claims",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  },
+  {
+    "plugin": "vendorguard",
+    "local_package_validation": "pass",
+    "errors": [],
+    "skills": [
+      {
+        "name": "compare-vendor-quotes",
+        "frontmatter": "pass"
+      }
+    ],
+    "official_portal_scans": "not run: portal browser permission declined"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "deployment_id": "dpl_6Ya4TEJozQ8QRngZ2oqunSxfekY8",
+  "source": "Vercel get_runtime_logs, production, 2026-10-05T17:50:54Z to 17:50:56Z",
+  "verified_event": {"event":"money_plugin_tool_call","plugin":"travelclaim","tool":"summarize_travel_disruption","ok":true,"elapsed_ms":1,"subject":null,"session":null,"organization":null,"locale":"en-US"},
+  "status": "Structured event verified after a real production tools/call; pseudonymization checked in local regression test; no prompt or tool argument fields logged."
+}

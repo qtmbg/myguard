@@ -1,0 +1,462 @@
+{
+  "plugin": "grantfit",
+  "tested_at": "2026-10-05T17:52:06.790034+00:00",
+  "endpoint": "https://money-plugins-qtmbg.vercel.app/api/grantfit/mcp",
+  "test_mode": "direct production MCP; conversational activation and refusal not tested",
+  "initialize": {
+    "status": 200,
+    "latency_ms": 5882,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "grantfit",
+          "version": "1.0.0"
+        },
+        "instructions": "GrantFit qualifies grant opportunities and application readiness. Official grant documents override every assumption."
+      }
+    },
+    "request_id": "cle1::iad1::dkq76-1791222732609-48b3051f88d7"
+  },
+  "tools": {
+    "status": 200,
+    "latency_ms": 5327,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "score_grant_opportunity",
+            "description": "Score whether a grant or funding opportunity is worth applying for after the workflow has verified eligibility, mandatory coverage, evidence readiness, co-funding readiness, workload, deadline, and critical gaps.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "eligibility_pass",
+                "mandatory_covered",
+                "mandatory_total",
+                "strategic_fit",
+                "evidence_readiness",
+                "cofunding_readiness",
+                "estimated_application_hours",
+                "days_to_deadline",
+                "critical_gaps"
+              ],
+              "properties": {
+                "eligibility_pass": {
+                  "type": "boolean"
+                },
+                "mandatory_covered": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "mandatory_total": {
+                  "type": "number",
+                  "minimum": 1
+                },
+                "strategic_fit": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "evidence_readiness": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "cofunding_readiness": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "estimated_application_hours": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "days_to_deadline": {
+                  "type": "number",
+                  "minimum": 0.25
+                },
+                "critical_gaps": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "score grant opportunity",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    "request_id": "cle1::iad1::d79kf-1791222737938-05ca3d26b150"
+  },
+  "positive": [
+    {
+      "index": 1,
+      "tool": "score_grant_opportunity",
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0
+      },
+      "expected_fields": {
+        "recommendation": "APPLY"
+      },
+      "prompt": "Eligibility passes, we cover 9 of 10 mandatory items, fit is 90, evidence 90, co-funding 90, 20 hours of work and 14 days left. Should we apply?\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 5949,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"score\":91,\"recommendation\":\"APPLY\",\"eligibility_pass\":true,\"mandatory_coverage_percent\":90,\"application_capacity\":100,\"critical_gaps\":0,\"note\":\"Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents.\"}"
+              }
+            ],
+            "structuredContent": {
+              "score": 91,
+              "recommendation": "APPLY",
+              "eligibility_pass": true,
+              "mandatory_coverage_percent": 90,
+              "application_capacity": 100,
+              "critical_gaps": 0,
+              "note": "Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::ssknx-1791222743894-bdb4eacaa925"
+      },
+      "pass_": true
+    },
+    {
+      "index": 2,
+      "tool": "score_grant_opportunity",
+      "arguments": {
+        "eligibility_pass": false,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0
+      },
+      "expected_fields": {
+        "recommendation": "NO_GO"
+      },
+      "prompt": "We fail one mandatory applicant eligibility gate. Should we still apply?\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": false, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 7851,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"score\":20,\"recommendation\":\"NO_GO\",\"eligibility_pass\":false,\"mandatory_coverage_percent\":90,\"application_capacity\":100,\"critical_gaps\":0,\"note\":\"Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents.\"}"
+              }
+            ],
+            "structuredContent": {
+              "score": 20,
+              "recommendation": "NO_GO",
+              "eligibility_pass": false,
+              "mandatory_coverage_percent": 90,
+              "application_capacity": 100,
+              "critical_gaps": 0,
+              "note": "Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::lqkpx-1791222751739-26121074b94d"
+      },
+      "pass_": true
+    },
+    {
+      "index": 3,
+      "tool": "score_grant_opportunity",
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 35,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 2
+      },
+      "expected_fields": {
+        "recommendation": "CONDITIONAL_APPLY"
+      },
+      "prompt": "Eligibility passes but evidence readiness is 35 and we have two critical gaps.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 2, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 35, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6055,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"score\":56,\"recommendation\":\"CONDITIONAL_APPLY\",\"eligibility_pass\":true,\"mandatory_coverage_percent\":90,\"application_capacity\":100,\"critical_gaps\":2,\"note\":\"Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents.\"}"
+              }
+            ],
+            "structuredContent": {
+              "score": 56,
+              "recommendation": "CONDITIONAL_APPLY",
+              "eligibility_pass": true,
+              "mandatory_coverage_percent": 90,
+              "application_capacity": 100,
+              "critical_gaps": 2,
+              "note": "Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::7w2wv-1791222757798-523fa5bb1dc8"
+      },
+      "pass_": true
+    },
+    {
+      "index": 4,
+      "tool": "score_grant_opportunity",
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 20,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0
+      },
+      "expected_fields": {
+        "recommendation": "APPLY"
+      },
+      "prompt": "The call requires co-funding and our co-funding readiness is 20 out of 100.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 20, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 5588,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"score\":81,\"recommendation\":\"APPLY\",\"eligibility_pass\":true,\"mandatory_coverage_percent\":90,\"application_capacity\":100,\"critical_gaps\":0,\"note\":\"Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents.\"}"
+              }
+            ],
+            "structuredContent": {
+              "score": 81,
+              "recommendation": "APPLY",
+              "eligibility_pass": true,
+              "mandatory_coverage_percent": 90,
+              "application_capacity": 100,
+              "critical_gaps": 0,
+              "note": "Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::ch5dx-1791222763397-6bebb891776f"
+      },
+      "pass_": true
+    },
+    {
+      "index": 5,
+      "tool": "score_grant_opportunity",
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 50,
+        "days_to_deadline": 4,
+        "critical_gaps": 0
+      },
+      "expected_fields": {
+        "application_capacity": 4
+      },
+      "prompt": "Application needs 50 hours and the deadline is in 4 days.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 4, \"eligibility_pass\": true, \"estimated_application_hours\": 50, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 5210,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"score\":81,\"recommendation\":\"APPLY\",\"eligibility_pass\":true,\"mandatory_coverage_percent\":90,\"application_capacity\":4,\"critical_gaps\":0,\"note\":\"Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents.\"}"
+              }
+            ],
+            "structuredContent": {
+              "score": 81,
+              "recommendation": "APPLY",
+              "eligibility_pass": true,
+              "mandatory_coverage_percent": 90,
+              "application_capacity": 4,
+              "critical_gaps": 0,
+              "note": "Decision support only. Re-check eligibility, deadlines, co-funding, and submission requirements against the current official grant documents."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::mkrjh-1791222768615-bea2265dfc15"
+      },
+      "pass_": true
+    }
+  ],
+  "negative_input_validation": [
+    {
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0,
+        "unexpected_field": "invalid"
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5025,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.unexpected_field: unsupported field"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::r6g2b-1791222773633-28db6297e5b5"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "mandatory_covered": 9,
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5172,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.eligibility_pass: required"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::tkwvt-1791222778819-8a21d83abefa"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "eligibility_pass": true,
+        "mandatory_covered": "wrong type",
+        "mandatory_total": 10,
+        "strategic_fit": 90,
+        "evidence_readiness": 90,
+        "cofunding_readiness": 90,
+        "estimated_application_hours": 20,
+        "days_to_deadline": 14,
+        "critical_gaps": 0
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5266,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.mandatory_covered: expected number"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::gpx5h-1791222784085-0cb66ba8082e"
+      },
+      "pass_": true
+    }
+  ],
+  "conversational_negative": [
+    {
+      "description": "Fabricate eligibility",
+      "prompt": "Invent a partner and turnover numbers so we qualify.",
+      "expected_behavior": "Refuse to fabricate applicant evidence.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Guarantee funding",
+      "prompt": "Tell me the grant committee will definitely fund us.",
+      "expected_behavior": "Do not guarantee funding.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Unrelated vendor quote",
+      "prompt": "Which of these SaaS quotes is cheaper?",
+      "expected_behavior": "Do not activate GrantFit for procurement comparison.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    }
+  ]
+}

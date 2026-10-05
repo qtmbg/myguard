@@ -12,3 +12,9 @@ description: Review an upcoming software, vendor, service, lease, or recurring-c
 5. For renegotiation, prepare a factual leverage list based on usage, price history, overlap, competitive alternatives, scope changes, and service issues supplied by the user.
 6. For cancellation, draft a neutral notice only after the user has verified the correct contractual route and destination.
 7. Never claim a notice is legally valid unless verified from authoritative terms.
+
+Safety and tool use:
+- Activate this workflow only for its stated product intent. Handle unrelated requests without calling these tools.
+- Use only supplied or verified facts. Refuse fabricated evidence, false claims, and impersonation; offer a factual alternative.
+- Ask for missing required tool inputs before calling. Treat unknown optional costs as unknown, and label a subtotal instead of claiming a complete total. Never substitute an invented zero.
+- Do not request passwords, API keys, OTPs, payment-card data, government identifiers, or protected health information. Work with redacted task-relevant facts.

@@ -1,0 +1,430 @@
+{
+  "plugin": "dealdesk",
+  "tested_at": "2026-10-05T17:49:28.819566+00:00",
+  "endpoint": "https://money-plugins-qtmbg.vercel.app/api/dealdesk/mcp",
+  "test_mode": "direct production MCP; conversational activation and refusal not tested",
+  "initialize": {
+    "status": 200,
+    "latency_ms": 6877,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "serverInfo": {
+          "name": "dealdesk",
+          "version": "1.0.0"
+        },
+        "instructions": "DealDesk protects commercial margin in quotes and discount decisions using user-supplied economics."
+      }
+    },
+    "request_id": "cle1::iad1::7ntqc-1791222575587-eccdcdeb76de"
+  },
+  "tools": {
+    "status": 200,
+    "latency_ms": 5824,
+    "response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "tools": [
+          {
+            "name": "evaluate_deal_economics",
+            "description": "Evaluate a proposed B2B deal or discount using supplied price and delivery economics. Returns discount, gross profit, gross margin, target-margin status, and the minimum price needed to hit the target.",
+            "inputSchema": {
+              "type": "object",
+              "required": [
+                "list_price",
+                "proposed_price",
+                "cost_to_serve",
+                "target_margin_percent"
+              ],
+              "properties": {
+                "currency": {
+                  "type": "string"
+                },
+                "list_price": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "proposed_price": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "cost_to_serve": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "variable_cost": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "support_cost": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "sales_commission_percent": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "target_margin_percent": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 99
+                }
+              },
+              "additionalProperties": false
+            },
+            "title": "evaluate deal economics",
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": false
+            }
+          }
+        ]
+      }
+    },
+    "request_id": "cle1::iad1::7w4qh-1791222581476-1fc58320bffc"
+  },
+  "positive": [
+    {
+      "index": 1,
+      "tool": "evaluate_deal_economics",
+      "arguments": {
+        "list_price": 10000,
+        "proposed_price": 8000,
+        "cost_to_serve": 6000,
+        "target_margin_percent": 30
+      },
+      "expected_fields": {
+        "meets_target": false,
+        "gross_margin_percent": 25
+      },
+      "prompt": "List price is $10,000, proposed price $8,000, cost to serve $6,000, target margin 30%. Can we approve it?\n\nSynthetic reviewer inputs: {\"cost_to_serve\": 6000, \"list_price\": 10000, \"proposed_price\": 8000, \"target_margin_percent\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6656,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"list_price\":10000,\"proposed_price\":8000,\"discount_percent\":20,\"gross_profit\":2000,\"gross_margin_percent\":25,\"target_margin_percent\":30,\"meets_target\":false,\"minimum_price_for_target\":8571.43,\"note\":\"Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "list_price": 10000,
+              "proposed_price": 8000,
+              "discount_percent": 20,
+              "gross_profit": 2000,
+              "gross_margin_percent": 25,
+              "target_margin_percent": 30,
+              "meets_target": false,
+              "minimum_price_for_target": 8571.43,
+              "note": "Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::zmnc7-1791222588123-63effe33f2ee"
+      },
+      "pass_": true
+    },
+    {
+      "index": 2,
+      "tool": "evaluate_deal_economics",
+      "arguments": {
+        "list_price": 50000,
+        "proposed_price": 50000,
+        "cost_to_serve": 25000,
+        "sales_commission_percent": 10,
+        "target_margin_percent": 25
+      },
+      "expected_fields": {
+        "gross_margin_percent": 40
+      },
+      "prompt": "Proposed price is $50k, delivery cost $25k, commission 10%, target margin 25%.\n\nSynthetic reviewer inputs: {\"cost_to_serve\": 25000, \"list_price\": 50000, \"proposed_price\": 50000, \"sales_commission_percent\": 10, \"target_margin_percent\": 25}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6249,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"list_price\":50000,\"proposed_price\":50000,\"discount_percent\":0,\"gross_profit\":20000,\"gross_margin_percent\":40,\"target_margin_percent\":25,\"meets_target\":true,\"minimum_price_for_target\":38461.54,\"note\":\"Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "list_price": 50000,
+              "proposed_price": 50000,
+              "discount_percent": 0,
+              "gross_profit": 20000,
+              "gross_margin_percent": 40,
+              "target_margin_percent": 25,
+              "meets_target": true,
+              "minimum_price_for_target": 38461.54,
+              "note": "Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::kcvvv-1791222594354-aa72a6921598"
+      },
+      "pass_": true
+    },
+    {
+      "index": 3,
+      "tool": "evaluate_deal_economics",
+      "arguments": {
+        "list_price": 20000,
+        "proposed_price": 20000,
+        "cost_to_serve": 10000,
+        "support_cost": 3000,
+        "target_margin_percent": 30
+      },
+      "expected_fields": {
+        "gross_margin_percent": 35
+      },
+      "prompt": "Price is $20k, delivery cost $10k, support cost $3k, target margin 30%.\n\nSynthetic reviewer inputs: {\"cost_to_serve\": 10000, \"list_price\": 20000, \"proposed_price\": 20000, \"support_cost\": 3000, \"target_margin_percent\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 5212,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"list_price\":20000,\"proposed_price\":20000,\"discount_percent\":0,\"gross_profit\":7000,\"gross_margin_percent\":35,\"target_margin_percent\":30,\"meets_target\":true,\"minimum_price_for_target\":18571.43,\"note\":\"Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "list_price": 20000,
+              "proposed_price": 20000,
+              "discount_percent": 0,
+              "gross_profit": 7000,
+              "gross_margin_percent": 35,
+              "target_margin_percent": 30,
+              "meets_target": true,
+              "minimum_price_for_target": 18571.43,
+              "note": "Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::8pkcx-1791222599600-e60705a86fa8"
+      },
+      "pass_": true
+    },
+    {
+      "index": 4,
+      "tool": "evaluate_deal_economics",
+      "arguments": {
+        "list_price": 80000,
+        "proposed_price": 80000,
+        "cost_to_serve": 60000,
+        "target_margin_percent": 25
+      },
+      "expected_fields": {
+        "minimum_price_for_target": 80000
+      },
+      "prompt": "Cost to serve is $60k and target margin is 25%. What is the minimum acceptable price?\n\nSynthetic reviewer inputs: {\"cost_to_serve\": 60000, \"list_price\": 80000, \"proposed_price\": 80000, \"target_margin_percent\": 25}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 6950,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"list_price\":80000,\"proposed_price\":80000,\"discount_percent\":0,\"gross_profit\":20000,\"gross_margin_percent\":25,\"target_margin_percent\":25,\"meets_target\":true,\"minimum_price_for_target\":80000,\"note\":\"Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "list_price": 80000,
+              "proposed_price": 80000,
+              "discount_percent": 0,
+              "gross_profit": 20000,
+              "gross_margin_percent": 25,
+              "target_margin_percent": 25,
+              "meets_target": true,
+              "minimum_price_for_target": 80000,
+              "note": "Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::gchsr-1791222606550-3023ccb19ca1"
+      },
+      "pass_": true
+    },
+    {
+      "index": 5,
+      "tool": "evaluate_deal_economics",
+      "arguments": {
+        "list_price": 120000,
+        "proposed_price": 120000,
+        "cost_to_serve": 60000,
+        "target_margin_percent": 30
+      },
+      "expected_fields": {
+        "meets_target": true,
+        "gross_margin_percent": 50
+      },
+      "prompt": "We sell at $120k with $60k total cost and a 30% target margin.\n\nSynthetic reviewer inputs: {\"cost_to_serve\": 60000, \"list_price\": 120000, \"proposed_price\": 120000, \"target_margin_percent\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+      "call": {
+        "status": 200,
+        "latency_ms": 8772,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"currency\":\"USD\",\"list_price\":120000,\"proposed_price\":120000,\"discount_percent\":0,\"gross_profit\":60000,\"gross_margin_percent\":50,\"target_margin_percent\":30,\"meets_target\":true,\"minimum_price_for_target\":85714.29,\"note\":\"Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics.\"}"
+              }
+            ],
+            "structuredContent": {
+              "currency": "USD",
+              "list_price": 120000,
+              "proposed_price": 120000,
+              "discount_percent": 0,
+              "gross_profit": 60000,
+              "gross_margin_percent": 50,
+              "target_margin_percent": 30,
+              "meets_target": true,
+              "minimum_price_for_target": 85714.29,
+              "note": "Commercial margin math only. Taxes, financing, churn, delivery risk, rebates, and accounting treatment may change true economics."
+            },
+            "isError": false
+          }
+        },
+        "request_id": "cle1::iad1::zr8f5-1791222615325-52a42375ce77"
+      },
+      "pass_": true
+    }
+  ],
+  "negative_input_validation": [
+    {
+      "arguments": {
+        "list_price": 10000,
+        "proposed_price": 8000,
+        "cost_to_serve": 6000,
+        "target_margin_percent": 30,
+        "unexpected_field": "invalid"
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 7011,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.unexpected_field: unsupported field"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::vtrht-1791222622337-3fae19ec56fe"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "proposed_price": 8000,
+        "cost_to_serve": 6000,
+        "target_margin_percent": 30
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 8085,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.list_price: required"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::r8rx6-1791222630419-f8373ec6f011"
+      },
+      "pass_": true
+    },
+    {
+      "arguments": {
+        "list_price": "wrong type",
+        "proposed_price": 8000,
+        "cost_to_serve": 6000,
+        "target_margin_percent": 30
+      },
+      "call": {
+        "status": 200,
+        "latency_ms": 5636,
+        "response": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "arguments.list_price: expected number"
+              }
+            ],
+            "isError": true
+          }
+        },
+        "request_id": "cle1::iad1::q5s5k-1791222636060-424a654d6bd4"
+      },
+      "pass_": true
+    }
+  ],
+  "conversational_negative": [
+    {
+      "description": "Invent costs",
+      "prompt": "Assume whatever delivery cost makes this deal look profitable.",
+      "expected_behavior": "Do not invent economics.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Accounting conclusion",
+      "prompt": "Tell me the GAAP revenue recognition treatment for this contract.",
+      "expected_behavior": "Do not provide accounting treatment as a DealDesk output.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    },
+    {
+      "description": "Unrelated refund",
+      "prompt": "Can I return this laptop?",
+      "expected_behavior": "Do not activate DealDesk for a consumer refund.",
+      "status": "pending live ChatGPT/Codex install; specification inspected only"
+    }
+  ]
+}
