@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "grantfit",
+  "version": "1.0.0",
+  "description": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps.",
+  "author": {
+    "name": "QTMBG LLC",
+    "url": "https://money-plugins-qtmbg.vercel.app"
+  },
+  "homepage": "https://money-plugins-qtmbg.vercel.app/grantfit",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": [
+    "grant",
+    "funding",
+    "eligibility",
+    "non-dilutive",
+    "application"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "GrantFit",
+        "shortDescription": "Know whether a grant is worth it.",
+        "longDescription": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps.",
+        "developerName": "QTMBG LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Check grant eligibility",
+          "Score application readiness",
+          "Map evidence gaps",
+          "Make apply/no-go decisions"
+        ],
+        "websiteURL": "https://money-plugins-qtmbg.vercel.app/grantfit",
+        "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+        "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+        "defaultPrompt": [
+          "Are we eligible for this grant?",
+          "Should we apply for this funding call?",
+          "What evidence are we missing before we submit this grant?"
+        ],
+        "brandColor": "#111111",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}
