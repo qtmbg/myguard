@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "vendorguard",
+  "version": "1.0.0",
+  "description": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences.",
+  "author": {
+    "name": "QTMBG LLC",
+    "url": "https://money-plugins-qtmbg.vercel.app"
+  },
+  "homepage": "https://money-plugins-qtmbg.vercel.app/vendorguard",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": [
+    "vendor",
+    "procurement",
+    "quote",
+    "TCO",
+    "cost"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "VendorGuard",
+        "shortDescription": "Compare the real cost of quotes.",
+        "longDescription": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences.",
+        "developerName": "QTMBG LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Normalize vendor quotes",
+          "Calculate total cost of ownership",
+          "Compare commercial proposals",
+          "Expose hidden cost drivers"
+        ],
+        "websiteURL": "https://money-plugins-qtmbg.vercel.app/vendorguard",
+        "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+        "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+        "defaultPrompt": [
+          "Which of these vendor quotes is really cheaper?",
+          "Compare these proposals over 24 months.",
+          "Are we overpaying for this vendor?"
+        ],
+        "brandColor": "#111111",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}
