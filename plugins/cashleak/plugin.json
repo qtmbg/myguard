@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "cashleak",
+  "version": "1.0.0",
+  "description": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate.",
+  "author": {
+    "name": "QTMBG LLC",
+    "url": "https://money-plugins-qtmbg.vercel.app"
+  },
+  "homepage": "https://money-plugins-qtmbg.vercel.app/cashleak",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": [
+    "spend",
+    "SaaS",
+    "cost reduction",
+    "subscriptions",
+    "waste"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "CashLeak",
+        "shortDescription": "Find recurring business waste.",
+        "longDescription": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate.",
+        "developerName": "QTMBG LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Analyze recurring spend",
+          "Find under-used tools",
+          "Detect overlap",
+          "Prioritize cost reduction"
+        ],
+        "websiteURL": "https://money-plugins-qtmbg.vercel.app/cashleak",
+        "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+        "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+        "defaultPrompt": [
+          "Where are we wasting money in our stack?",
+          "What recurring spend should we cut or renegotiate?",
+          "Rank these subscriptions by likely cash leak."
+        ],
+        "brandColor": "#111111",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}
