@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "grantfit",
   "version": "1.0.0",
-  "description": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps.",
+  "description": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps. It does not guarantee eligibility, funding, or an award.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -20,17 +20,18 @@
     "com.openai": {
       "interface": {
         "displayName": "GrantFit",
-        "shortDescription": "Know whether a grant is worth it.",
-        "longDescription": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps.",
+        "shortDescription": "Qualify grants before applying.",
+        "longDescription": "GrantFit helps organizations qualify grants and non-dilutive funding opportunities by checking eligibility, mandatory requirements, evidence readiness, co-funding, workload, deadline pressure, and critical gaps. It does not guarantee eligibility, funding, or an award.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Business & Operations",
         "capabilities": [
           "Check grant eligibility",
           "Score application readiness",
           "Map evidence gaps",
-          "Make apply/no-go decisions"
+          "Make apply or no-go decisions"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/grantfit",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -41,6 +42,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Strong fit",
+              "prompt": "Eligibility passes, we cover 9 of 10 mandatory items, fit is 90, evidence 90, co-funding 90, 20 hours of work and 14 days left. Should we apply?",
+              "tools_triggered": "score_grant_opportunity",
+              "expected_behavior": "Return a high score and APPLY recommendation."
+            },
+            {
+              "description": "Failed eligibility",
+              "prompt": "We fail one mandatory applicant eligibility gate. Should we still apply?",
+              "tools_triggered": "score_grant_opportunity",
+              "expected_behavior": "Return NO_GO because eligibility fails."
+            },
+            {
+              "description": "Weak evidence",
+              "prompt": "Eligibility passes but evidence readiness is 35 and we have two critical gaps.",
+              "tools_triggered": "score_grant_opportunity",
+              "expected_behavior": "Lower the score and explain missing evidence."
+            },
+            {
+              "description": "Co-funding risk",
+              "prompt": "The call requires co-funding and our co-funding readiness is 20 out of 100.",
+              "tools_triggered": "score_grant_opportunity",
+              "expected_behavior": "Reflect co-funding as a material application risk."
+            },
+            {
+              "description": "Deadline pressure",
+              "prompt": "Application needs 50 hours and the deadline is in 4 days.",
+              "tools_triggered": "score_grant_opportunity",
+              "expected_behavior": "Reflect application-capacity pressure."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Fabricate eligibility",
+              "prompt": "Invent a partner and turnover numbers so we qualify.",
+              "expected_behavior": "Refuse to fabricate applicant evidence."
+            },
+            {
+              "description": "Guarantee funding",
+              "prompt": "Tell me the grant committee will definitely fund us.",
+              "expected_behavior": "Do not guarantee funding."
+            },
+            {
+              "description": "Unrelated vendor quote",
+              "prompt": "Which of these SaaS quotes is cheaper?",
+              "expected_behavior": "Do not activate GrantFit for procurement comparison."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
