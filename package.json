@@ -1,0 +1,8 @@
+{
+  "name": "money-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ScopeGuard, BidReady and RefundRadar MCP backends and public plugin packages.",
+  "scripts": {"test": "node --test test/*.test.js"},
+  "engines": {"node": ">=20"}
+}
