@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "travelclaim",
+  "version": "1.0.0",
+  "description": "TravelClaim organizes flight and baggage disruption facts, helps verify current official passenger-rights rules and carrier policy, totals documented expenses, and prepares factual claims without guaranteeing compensation.",
+  "author": {
+    "name": "QTMBG LLC",
+    "url": "https://money-plugins-qtmbg.vercel.app"
+  },
+  "homepage": "https://money-plugins-qtmbg.vercel.app/travelclaim",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": [
+    "flight",
+    "delay",
+    "cancellation",
+    "baggage",
+    "claim"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "TravelClaim",
+        "shortDescription": "Build a factual travel claim path.",
+        "longDescription": "TravelClaim organizes flight and baggage disruption facts, helps verify current official passenger-rights rules and carrier policy, totals documented expenses, and prepares factual claims without guaranteeing compensation.",
+        "developerName": "QTMBG LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Summarize travel disruptions",
+          "Calculate documented expenses",
+          "Prepare factual claims",
+          "Guide policy verification"
+        ],
+        "websiteURL": "https://money-plugins-qtmbg.vercel.app/travelclaim",
+        "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+        "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+        "defaultPrompt": [
+          "My flight was delayed. Am I owed anything?",
+          "My flight was cancelled. Help me prepare a claim.",
+          "My bag arrived late. What can I claim and what evidence do I need?"
+        ],
+        "brandColor": "#111111",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}
