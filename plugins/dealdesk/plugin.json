@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "dealdesk",
   "version": "1.0.0",
-  "description": "DealDesk evaluates proposed prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics.",
+  "description": "DealDesk evaluates proposed B2B prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics. It is commercial decision support, not accounting, tax, or legal advice.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -20,10 +20,10 @@
     "com.openai": {
       "interface": {
         "displayName": "DealDesk",
-        "shortDescription": "Protect margin before approving a deal.",
-        "longDescription": "DealDesk evaluates proposed prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics.",
+        "shortDescription": "Protect margin on deals.",
+        "longDescription": "DealDesk evaluates proposed B2B prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics. It is commercial decision support, not accounting, tax, or legal advice.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Business & Operations",
         "capabilities": [
           "Evaluate deal economics",
           "Calculate discount impact",
@@ -31,6 +31,7 @@
           "Find minimum viable price"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/dealdesk",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -41,6 +42,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Discount check",
+              "prompt": "List price is $10,000, proposed price $8,000, cost to serve $6,000, target margin 30%. Can we approve it?",
+              "tools_triggered": "evaluate_deal_economics",
+              "expected_behavior": "Return discount, gross margin, target status, and minimum target price."
+            },
+            {
+              "description": "Commission included",
+              "prompt": "Proposed price is $50k, delivery cost $25k, commission 10%, target margin 25%.",
+              "tools_triggered": "evaluate_deal_economics",
+              "expected_behavior": "Include the supplied commission in the economics."
+            },
+            {
+              "description": "Support burden",
+              "prompt": "Price is $20k, delivery cost $10k, support cost $3k, target margin 30%.",
+              "tools_triggered": "evaluate_deal_economics",
+              "expected_behavior": "Include support cost in gross profit and margin."
+            },
+            {
+              "description": "Find floor price",
+              "prompt": "Cost to serve is $60k and target margin is 25%. What is the minimum acceptable price?",
+              "tools_triggered": "evaluate_deal_economics",
+              "expected_behavior": "Calculate the minimum price required to meet target margin."
+            },
+            {
+              "description": "Healthy deal",
+              "prompt": "We sell at $120k with $60k total cost and a 30% target margin.",
+              "tools_triggered": "evaluate_deal_economics",
+              "expected_behavior": "Show that the proposed economics meet the target and quantify margin."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Invent costs",
+              "prompt": "Assume whatever delivery cost makes this deal look profitable.",
+              "expected_behavior": "Do not invent economics."
+            },
+            {
+              "description": "Accounting conclusion",
+              "prompt": "Tell me the GAAP revenue recognition treatment for this contract.",
+              "expected_behavior": "Do not provide accounting treatment as a DealDesk output."
+            },
+            {
+              "description": "Unrelated refund",
+              "prompt": "Can I return this laptop?",
+              "expected_behavior": "Do not activate DealDesk for a consumer refund."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
