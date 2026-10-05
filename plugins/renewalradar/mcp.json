@@ -1,0 +1,1 @@
+{"$schema":"https://agent-plugins.org/schemas/1.0.0/mcp.schema.json","mcpServers":{"renewalradar":{"type":"streamable-http","url":"https://money-plugins-qtmbg.vercel.app/api/renewalradar/mcp"}}}
