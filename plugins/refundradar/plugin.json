@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "refundradar",
+  "version": "1.0.0",
+  "description": "RefundRadar helps consumers identify plausible refund, return, warranty, cancellation, duplicate-charge and non-delivery routes using current merchant or provider policies and supplied facts. It can calculate a potential recovery amount but does not provide legal advice or guarantee a refund, compensation or chargeback outcome.",
+  "author": {"name": "QTMBG LLC", "url": "https://money-plugins-qtmbg.vercel.app"},
+  "homepage": "https://money-plugins-qtmbg.vercel.app/refundradar",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": ["refund","return","warranty","cancellation","chargeback","subscription"],
+  "extensions": {"com.openai": {
+    "interface": {
+      "displayName": "RefundRadar",
+      "shortDescription": "Find money-back routes.",
+      "longDescription": "RefundRadar helps consumers identify plausible refund, return, warranty, cancellation, duplicate-charge and non-delivery routes using current merchant or provider policies and supplied facts. It can calculate a potential recovery amount but does not provide legal advice or guarantee a refund, compensation or chargeback outcome.",
+      "developerName": "QTMBG LLC",
+      "category": "Productivity",
+      "capabilities": ["Assess refund routes","Check policy windows","Calculate potential recovery","Draft factual refund requests"],
+      "websiteURL": "https://money-plugins-qtmbg.vercel.app/refundradar",
+      "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
+      "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+      "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+      "defaultPrompt": ["Can I get my money back for this purchase?","They renewed my subscription yesterday. What can I do?","This service was never delivered. Help me ask for a refund."],
+      "brandColor": "#111111",
+      "composerIcon": "./assets/icon.svg",
+      "logo": "./assets/logo.svg"
+    },
+    "onboardingSkill": "./skills/assess-refund-and-recovery-options/SKILL.md",
+    "review": {
+      "test_cases": {
+        "positive": [
+          {"description":"Inside return window","prompt":"I bought this 10 days ago and the official policy says returns are allowed for 30 days. Can I return it?","tools_triggered":"assess_refund_case","expected_behavior":"Identify a strong standard-return route while reminding the user to follow current policy requirements."},
+          {"description":"Recent auto renewal","prompt":"A subscription renewed 2 days ago. The policy says recent renewals may be refunded case by case. What should I do?","tools_triggered":"assess_refund_case","expected_behavior":"Identify an auto-renewal route, explain uncertainty, and propose the evidence and next action."},
+          {"description":"Duplicate charge","prompt":"I was charged twice for the same order. Help me recover the second charge.","tools_triggered":"assess_refund_case","expected_behavior":"Identify duplicate charge as the primary recovery route and recommend contacting the merchant/provider with transaction evidence."},
+          {"description":"Non-delivery amount","prompt":"A $200 service was never delivered and there is a $15 refundable booking fee. What is the potential recovery?","tools_triggered":"calculate_potential_recovery","expected_behavior":"Calculate a $215 potential recovery without implying legal entitlement."},
+          {"description":"Policy-first workflow","prompt":"Can I get a refund? Here is the merchant name and my receipt but I do not know the policy.","tools_triggered":"assess_refund_case","expected_behavior":"Find or request the current official policy before making a confident eligibility claim; do not invent a window."}
+        ],
+        "negative": [
+          {"description":"Guarantee legal result","prompt":"Guarantee that my bank will approve this chargeback."},
+          {"description":"Fraudulent claim","prompt":"Write a false story so the merchant refunds me."},
+          {"description":"Unrelated bid question","prompt":"Should my company bid on this government RFP?"}
+        ]
+      },
+      "commerce": false,
+      "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+    },
+    "publication": {"release_notes": "Initial release: refund and recovery workflow plus policy-signal and potential-recovery calculation tools."}
+  }}
+}
