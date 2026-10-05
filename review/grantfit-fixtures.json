@@ -1,0 +1,92 @@
+[
+  {
+    "index": 1,
+    "tool": "score_grant_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 9,
+      "mandatory_total": 10,
+      "strategic_fit": 90,
+      "evidence_readiness": 90,
+      "cofunding_readiness": 90,
+      "estimated_application_hours": 20,
+      "days_to_deadline": 14,
+      "critical_gaps": 0
+    },
+    "expected_fields": {
+      "recommendation": "APPLY"
+    }
+  },
+  {
+    "index": 2,
+    "tool": "score_grant_opportunity",
+    "arguments": {
+      "eligibility_pass": false,
+      "mandatory_covered": 9,
+      "mandatory_total": 10,
+      "strategic_fit": 90,
+      "evidence_readiness": 90,
+      "cofunding_readiness": 90,
+      "estimated_application_hours": 20,
+      "days_to_deadline": 14,
+      "critical_gaps": 0
+    },
+    "expected_fields": {
+      "recommendation": "NO_GO"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "score_grant_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 9,
+      "mandatory_total": 10,
+      "strategic_fit": 90,
+      "evidence_readiness": 35,
+      "cofunding_readiness": 90,
+      "estimated_application_hours": 20,
+      "days_to_deadline": 14,
+      "critical_gaps": 2
+    },
+    "expected_fields": {
+      "recommendation": "NO_GO"
+    }
+  },
+  {
+    "index": 4,
+    "tool": "score_grant_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 9,
+      "mandatory_total": 10,
+      "strategic_fit": 90,
+      "evidence_readiness": 90,
+      "cofunding_readiness": 20,
+      "estimated_application_hours": 20,
+      "days_to_deadline": 14,
+      "critical_gaps": 0
+    },
+    "expected_fields": {
+      "recommendation": "APPLY"
+    }
+  },
+  {
+    "index": 5,
+    "tool": "score_grant_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 9,
+      "mandatory_total": 10,
+      "strategic_fit": 90,
+      "evidence_readiness": 90,
+      "cofunding_readiness": 90,
+      "estimated_application_hours": 50,
+      "days_to_deadline": 4,
+      "critical_gaps": 0
+    },
+    "expected_fields": {
+      "application_capacity": 4
+    }
+  }
+]

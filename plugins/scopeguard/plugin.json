@@ -49,31 +49,31 @@
           "positive": [
             {
               "description": "Price a scoped project",
-              "prompt": "I charge $150/hour. Price 20 lean, 30 expected, and 40 protected hours with 10% overhead.",
+              "prompt": "I charge $150/hour. Price 20 lean, 30 expected, and 40 protected hours with 10% overhead.\n\nSynthetic reviewer inputs: {\"expected_effort\": 30, \"lean_effort\": 20, \"overhead_percent\": 10, \"protected_effort\": 40, \"rate_amount\": 150, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "price_scope",
               "expected_behavior": "Calculate three price bands from the supplied economics and state the assumptions."
             },
             {
               "description": "Respect a minimum fee",
-              "prompt": "My minimum project fee is $5,000, my rate is $200/hour, and expected effort is 15 hours. Price this.",
+              "prompt": "My minimum project fee is $5,000, my rate is $200/hour, and expected effort is 15 hours. Price this.\n\nSynthetic reviewer inputs: {\"expected_effort\": 15, \"lean_effort\": 15, \"minimum_fee\": 5000, \"protected_effort\": 15, \"rate_amount\": 200, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "price_scope",
               "expected_behavior": "Apply the minimum fee where it exceeds calculated pricing and explain the floor."
             },
             {
               "description": "Price a change request",
-              "prompt": "The agreed scope excluded two new landing pages. They add 8 hours at $125/hour. What is the change order?",
-              "tools_triggered": "price_scope",
+              "prompt": "The agreed scope excluded two new landing pages. They add 8 hours at $125/hour. What is the change order?\n\nSynthetic reviewer inputs: {\"incremental_effort\": 8, \"rate_amount\": 125, \"rate_unit\": \"hour\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
+              "tools_triggered": "price_scope_change",
               "expected_behavior": "Treat the request as incremental scope and calculate its commercial value."
             },
             {
               "description": "Analyze hidden work",
-              "prompt": "Scope this website redesign, surface hidden work, then price it using my $1,000/day rate.",
+              "prompt": "Scope this website redesign, surface hidden work, then price it using my $1,000/day rate.\n\nSynthetic reviewer inputs: {\"expected_effort\": 8, \"lean_effort\": 6, \"protected_effort\": 10, \"rate_amount\": 1000, \"rate_unit\": \"day\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions. Website brief: five static pages, supplied copy, one language, two review rounds, no CMS, no migration. Supplied effort includes discovery, design, development, QA, project management and handoff.",
               "tools_triggered": "price_scope",
               "expected_behavior": "Expose hidden work, estimate effort bands, then calculate pricing from the supplied rate."
             },
             {
               "description": "Use supplied economics",
-              "prompt": "I expect 6 to 8 days at $900/day. Give me a protected quote.",
+              "prompt": "I expect 6 to 8 days at $900/day. Give me a protected quote.\n\nSynthetic reviewer inputs: {\"expected_effort\": 7, \"lean_effort\": 6, \"protected_effort\": 8, \"rate_amount\": 900, \"rate_unit\": \"day\"}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "price_scope",
               "expected_behavior": "Use only the supplied economics and return a defensible price."
             }
@@ -100,8 +100,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/scope-and-price-client-work/SKILL.md"
     }
   }
 }

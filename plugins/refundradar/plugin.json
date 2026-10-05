@@ -49,31 +49,31 @@
           "positive": [
             {
               "description": "Inside return window",
-              "prompt": "I bought this 10 days ago and the official policy says returns are allowed for 30 days. Can I return it?",
+              "prompt": "I bought this 10 days ago and the official policy says returns are allowed for 30 days. Can I return it?\n\nSynthetic reviewer inputs: {\"purchase_age_days\": 10, \"return_window_days\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_refund_case",
               "expected_behavior": "Identify the standard-return route while preserving policy uncertainty."
             },
             {
               "description": "Recent auto-renewal",
-              "prompt": "A subscription renewed 2 days ago and the policy says recent renewals may be refunded case by case. What should I do?",
+              "prompt": "A subscription renewed 2 days ago and the policy says recent renewals may be refunded case by case. What should I do?\n\nSynthetic reviewer inputs: {\"auto_renewal_days_ago\": 2, \"policy_allows_exception\": true, \"purchase_age_days\": 2}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_refund_case",
               "expected_behavior": "Identify an auto-renewal route and factual next step."
             },
             {
               "description": "Duplicate charge",
-              "prompt": "I was charged twice for the same order. Help me recover the second charge.",
+              "prompt": "I was charged twice for the same order. Help me recover the second charge.\n\nSynthetic reviewer inputs: {\"duplicate_charge\": true, \"purchase_age_days\": 1}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_refund_case",
               "expected_behavior": "Identify duplicate charge as the primary route."
             },
             {
               "description": "Defective item",
-              "prompt": "My product failed after six months and the merchant policy includes a warranty exception.",
+              "prompt": "My product failed after six months and the merchant policy includes a warranty exception.\n\nSynthetic reviewer inputs: {\"item_defective\": true, \"policy_allows_exception\": true, \"purchase_age_days\": 180}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_refund_case",
               "expected_behavior": "Identify the defect or warranty route without guaranteeing a remedy."
             },
             {
               "description": "Non-delivery",
-              "prompt": "I paid for a service that was never delivered. What should I do?",
+              "prompt": "I paid for a service that was never delivered. What should I do?\n\nSynthetic reviewer inputs: {\"purchase_age_days\": 14, \"service_not_delivered\": true}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_refund_case",
               "expected_behavior": "Identify a non-delivery route and provide evidence steps."
             }
@@ -100,8 +100,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/assess-refund-and-recovery-options/SKILL.md"
     }
   }
 }

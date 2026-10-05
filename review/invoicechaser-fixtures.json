@@ -1,0 +1,63 @@
+[
+  {
+    "index": 1,
+    "tool": "assess_overdue_invoice",
+    "arguments": {
+      "invoice_amount": 2000,
+      "days_overdue": 5,
+      "reminders_sent": 0
+    },
+    "expected_fields": {
+      "stage": "FRIENDLY_REMINDER"
+    }
+  },
+  {
+    "index": 2,
+    "tool": "assess_overdue_invoice",
+    "arguments": {
+      "currency": "EUR",
+      "invoice_amount": 4500,
+      "days_overdue": 25,
+      "reminders_sent": 1
+    },
+    "expected_fields": {
+      "stage": "FIRM_REMINDER"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "assess_overdue_invoice",
+    "arguments": {
+      "invoice_amount": 10000,
+      "amount_paid": 4000,
+      "days_overdue": 20
+    },
+    "expected_fields": {
+      "outstanding_amount": 6000
+    }
+  },
+  {
+    "index": 4,
+    "tool": "assess_overdue_invoice",
+    "arguments": {
+      "invoice_amount": 3000,
+      "days_overdue": 35,
+      "promised_payment_date_missed": true
+    },
+    "expected_fields": {
+      "stage": "FIRM_PRE_ESCALATION"
+    }
+  },
+  {
+    "index": 5,
+    "tool": "assess_overdue_invoice",
+    "arguments": {
+      "invoice_amount": 3000,
+      "days_overdue": 50,
+      "disputed": true
+    },
+    "expected_fields": {
+      "stage": "RESOLVE_DISPUTE"
+    }
+  }
+]

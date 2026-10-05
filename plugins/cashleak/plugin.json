@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Under-used subscription",
-              "prompt": "This tool costs $1,000/month, usage is 10%, overlap 90, essentiality 10, and no owner is known.",
+              "prompt": "This tool costs $1,000/month, usage is 10%, overlap 90, essentiality 10, and no owner is known.\n\nSynthetic reviewer inputs: {\"essentiality\": 10, \"monthly_cost\": 1000, \"overlap_score\": 90, \"owner_known\": false, \"utilization_percent\": 10}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "classify_spend_leak",
               "expected_behavior": "Flag a high-priority leak and quantify under-utilized spend."
             },
             {
               "description": "Critical software",
-              "prompt": "This costs $2,000/month, usage 95%, no overlap, essentiality 100.",
+              "prompt": "This costs $2,000/month, usage 95%, no overlap, essentiality 100.\n\nSynthetic reviewer inputs: {\"essentiality\": 100, \"monthly_cost\": 2000, \"overlap_score\": 0, \"owner_known\": true, \"utilization_percent\": 95}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "classify_spend_leak",
               "expected_behavior": "Avoid recommending a cut based on price alone."
             },
             {
               "description": "Price increase",
-              "prompt": "Vendor raised price 25%; usage is 70%, overlap 50, essentiality 40.",
+              "prompt": "Vendor raised price 25%; usage is 70%, overlap 50, essentiality 40.\n\nSynthetic reviewer inputs: {\"essentiality\": 40, \"monthly_cost\": 1000, \"overlap_score\": 50, \"owner_known\": true, \"price_increase_percent\": 25, \"utilization_percent\": 70}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "classify_spend_leak",
               "expected_behavior": "Reflect the increase and overlap in review priority."
             },
             {
               "description": "No owner",
-              "prompt": "We pay $600/month, usage is 50%, no one owns the tool, and overlap is 60.",
+              "prompt": "We pay $600/month, usage is 50%, no one owns the tool, and overlap is 60.\n\nSynthetic reviewer inputs: {\"essentiality\": 40, \"monthly_cost\": 600, \"overlap_score\": 60, \"owner_known\": false, \"utilization_percent\": 50}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "classify_spend_leak",
-              "expected_behavior": "Increase review priority because ownership is missing."
+              "expected_behavior": "Increase review priority versus the same economics with a known owner. A score of 44 remains KEEP_MONITORED; assign an owner and verify usage."
             },
             {
               "description": "Moderate waste",
-              "prompt": "Subscription is $300/month, usage 40%, overlap 30, essentiality 50.",
+              "prompt": "Subscription is $300/month, usage 40%, overlap 30, essentiality 50.\n\nSynthetic reviewer inputs: {\"essentiality\": 50, \"monthly_cost\": 300, \"overlap_score\": 30, \"owner_known\": true, \"utilization_percent\": 40}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "classify_spend_leak",
               "expected_behavior": "Return annualized cost, under-utilized spend, and a proportional review action."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/find-recurring-business-waste/SKILL.md"
     }
   }
 }

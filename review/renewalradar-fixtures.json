@@ -1,0 +1,84 @@
+[
+  {
+    "index": 1,
+    "tool": "assess_renewal",
+    "arguments": {
+      "annualized_spend": 12000,
+      "days_to_renewal": 20,
+      "notice_period_days": 30,
+      "utilization_percent": 30,
+      "overlap_score": 0,
+      "criticality": 50,
+      "auto_renews": true
+    },
+    "expected_fields": {
+      "action": "NOTICE_WINDOW_AT_RISK",
+      "days_until_notice_deadline": -10
+    }
+  },
+  {
+    "index": 2,
+    "tool": "assess_renewal",
+    "arguments": {
+      "annualized_spend": 24000,
+      "days_to_renewal": 90,
+      "notice_period_days": 30,
+      "utilization_percent": 25,
+      "overlap_score": 70,
+      "criticality": 20,
+      "auto_renews": true
+    },
+    "expected_fields": {
+      "estimated_underutilized_spend": 18000
+    }
+  },
+  {
+    "index": 3,
+    "tool": "assess_renewal",
+    "arguments": {
+      "annualized_spend": 12000,
+      "days_to_renewal": 60,
+      "notice_period_days": 30,
+      "utilization_percent": 95,
+      "overlap_score": 0,
+      "criticality": 50,
+      "auto_renews": true,
+      "price_increase_percent": 20
+    },
+    "expected_fields": {
+      "days_until_notice_deadline": 30
+    }
+  },
+  {
+    "index": 4,
+    "tool": "assess_renewal",
+    "arguments": {
+      "annualized_spend": 3000,
+      "days_to_renewal": 90,
+      "notice_period_days": 30,
+      "utilization_percent": 100,
+      "overlap_score": 0,
+      "criticality": 100,
+      "auto_renews": true
+    },
+    "expected_fields": {
+      "action": "LIKELY_RENEW"
+    }
+  },
+  {
+    "index": 5,
+    "tool": "assess_renewal",
+    "arguments": {
+      "annualized_spend": 12000,
+      "days_to_renewal": 45,
+      "notice_period_days": 30,
+      "utilization_percent": 30,
+      "overlap_score": 0,
+      "criticality": 50,
+      "auto_renews": true
+    },
+    "expected_fields": {
+      "days_until_notice_deadline": 15
+    }
+  }
+]

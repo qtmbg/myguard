@@ -1,0 +1,74 @@
+[
+  {
+    "index": 1,
+    "tool": "price_scope",
+    "arguments": {
+      "rate_amount": 150,
+      "rate_unit": "hour",
+      "lean_effort": 20,
+      "expected_effort": 30,
+      "protected_effort": 40,
+      "overhead_percent": 10
+    },
+    "expected_fields": {
+      "lean_price": 3300,
+      "expected_price": 4950,
+      "protected_price": 6600
+    }
+  },
+  {
+    "index": 2,
+    "tool": "price_scope",
+    "arguments": {
+      "rate_amount": 200,
+      "rate_unit": "hour",
+      "lean_effort": 15,
+      "expected_effort": 15,
+      "protected_effort": 15,
+      "minimum_fee": 5000
+    },
+    "expected_fields": {
+      "expected_price": 5000
+    }
+  },
+  {
+    "index": 3,
+    "tool": "price_scope_change",
+    "arguments": {
+      "incremental_effort": 8,
+      "rate_amount": 125,
+      "rate_unit": "hour"
+    },
+    "expected_fields": {
+      "incremental_price": 1000
+    }
+  },
+  {
+    "index": 4,
+    "tool": "price_scope",
+    "arguments": {
+      "rate_amount": 1000,
+      "rate_unit": "day",
+      "lean_effort": 6,
+      "expected_effort": 8,
+      "protected_effort": 10
+    },
+    "expected_fields": {
+      "expected_price": 8000
+    }
+  },
+  {
+    "index": 5,
+    "tool": "price_scope",
+    "arguments": {
+      "rate_amount": 900,
+      "rate_unit": "day",
+      "lean_effort": 6,
+      "expected_effort": 7,
+      "protected_effort": 8
+    },
+    "expected_fields": {
+      "protected_price": 7200
+    }
+  }
+]

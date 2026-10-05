@@ -1,0 +1,54 @@
+[
+  {
+    "index": 1,
+    "tool": "summarize_travel_disruption",
+    "arguments": {
+      "arrival_delay_minutes": 300
+    },
+    "expected_fields": {
+      "disruption_level": "MAJOR",
+      "policy_check_required": true
+    }
+  },
+  {
+    "index": 2,
+    "tool": "summarize_travel_disruption",
+    "arguments": {
+      "canceled": true,
+      "rerouted": true
+    },
+    "expected_fields": {
+      "disruption_level": "MAJOR"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "summarize_travel_disruption",
+    "arguments": {
+      "denied_boarding": true
+    },
+    "expected_fields": {
+      "disruption_level": "MAJOR"
+    }
+  },
+  {
+    "index": 4,
+    "tool": "summarize_travel_disruption",
+    "arguments": {
+      "baggage_delay_hours": 36
+    },
+    "expected_fields": {
+      "disruption_level": "SIGNIFICANT"
+    }
+  },
+  {
+    "index": 5,
+    "tool": "summarize_travel_disruption",
+    "arguments": {
+      "arrival_delay_minutes": 90
+    },
+    "expected_fields": {
+      "disruption_level": "MODERATE"
+    }
+  }
+]

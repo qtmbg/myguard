@@ -1,0 +1,92 @@
+[
+  {
+    "index": 1,
+    "tool": "score_bid_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 19,
+      "mandatory_total": 20,
+      "critical_gaps": 0,
+      "strategic_fit": 90,
+      "delivery_fit": 90,
+      "evidence_readiness": 90,
+      "estimated_response_hours": 24,
+      "days_to_deadline": 10
+    },
+    "expected_fields": {
+      "recommendation": "BID"
+    }
+  },
+  {
+    "index": 2,
+    "tool": "score_bid_opportunity",
+    "arguments": {
+      "eligibility_pass": false,
+      "mandatory_covered": 19,
+      "mandatory_total": 20,
+      "critical_gaps": 0,
+      "strategic_fit": 90,
+      "delivery_fit": 90,
+      "evidence_readiness": 90,
+      "estimated_response_hours": 24,
+      "days_to_deadline": 10
+    },
+    "expected_fields": {
+      "recommendation": "NO_BID"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "score_bid_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 19,
+      "mandatory_total": 20,
+      "critical_gaps": 0,
+      "strategic_fit": 90,
+      "delivery_fit": 90,
+      "evidence_readiness": 55,
+      "estimated_response_hours": 60,
+      "days_to_deadline": 3
+    },
+    "expected_fields": {
+      "workload_fit": 0
+    }
+  },
+  {
+    "index": 4,
+    "tool": "score_bid_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 12,
+      "mandatory_total": 18,
+      "critical_gaps": 0,
+      "strategic_fit": 90,
+      "delivery_fit": 90,
+      "evidence_readiness": 50,
+      "estimated_response_hours": 24,
+      "days_to_deadline": 10
+    },
+    "expected_fields": {
+      "compliance_percent": 67
+    }
+  },
+  {
+    "index": 5,
+    "tool": "score_bid_opportunity",
+    "arguments": {
+      "eligibility_pass": true,
+      "mandatory_covered": 19,
+      "mandatory_total": 20,
+      "critical_gaps": 2,
+      "strategic_fit": 60,
+      "delivery_fit": 65,
+      "evidence_readiness": 60,
+      "estimated_response_hours": 24,
+      "days_to_deadline": 10
+    },
+    "expected_fields": {
+      "recommendation": "NO_BID"
+    }
+  }
+]

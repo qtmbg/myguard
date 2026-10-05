@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Friendly reminder",
-              "prompt": "A $2,000 invoice is 5 days overdue and I have sent no reminders. What should I do?",
+              "prompt": "A $2,000 invoice is 5 days overdue and I have sent no reminders. What should I do?\n\nSynthetic reviewer inputs: {\"days_overdue\": 5, \"invoice_amount\": 2000, \"reminders_sent\": 0}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_overdue_invoice",
               "expected_behavior": "Calculate the outstanding amount and recommend a friendly reminder."
             },
             {
               "description": "Firm reminder",
-              "prompt": "A €4,500 invoice is 25 days overdue and I already sent one reminder. What next?",
+              "prompt": "A \u20ac4,500 invoice is 25 days overdue and I already sent one reminder. What next?\n\nSynthetic reviewer inputs: {\"currency\": \"EUR\", \"days_overdue\": 25, \"invoice_amount\": 4500, \"reminders_sent\": 1}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_overdue_invoice",
               "expected_behavior": "Return a firm-reminder stage and factual next step."
             },
             {
               "description": "Partial payment",
-              "prompt": "The invoice was $10,000 and they paid $4,000. It is now 20 days overdue.",
+              "prompt": "The invoice was $10,000 and they paid $4,000. It is now 20 days overdue.\n\nSynthetic reviewer inputs: {\"amount_paid\": 4000, \"days_overdue\": 20, \"invoice_amount\": 10000}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_overdue_invoice",
               "expected_behavior": "Calculate $6,000 outstanding and choose the appropriate stage."
             },
             {
               "description": "Missed promise",
-              "prompt": "The client promised to pay yesterday and missed it. The invoice is 35 days overdue.",
+              "prompt": "The client promised to pay yesterday and missed it. The invoice is 35 days overdue.\n\nSynthetic reviewer inputs: {\"days_overdue\": 35, \"invoice_amount\": 3000, \"promised_payment_date_missed\": true}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_overdue_invoice",
               "expected_behavior": "Increase escalation priority and recommend a firm follow-up."
             },
             {
               "description": "Disputed invoice",
-              "prompt": "The client disputes part of the work on a 50-day overdue invoice.",
+              "prompt": "The client disputes part of the work on a 50-day overdue invoice.\n\nSynthetic reviewer inputs: {\"days_overdue\": 50, \"disputed\": true, \"invoice_amount\": 3000}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_overdue_invoice",
               "expected_behavior": "Prioritize dispute resolution over unsupported escalation."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/chase-overdue-invoices/SKILL.md"
     }
   }
 }

@@ -1,0 +1,40 @@
+
+> money-plugins@1.0.0 test
+> node --test test/*.test.js
+
+{"event":"money_plugin_tool_call","plugin":"test","tool":"compute","ok":false,"elapsed_ms":0,"subject":null,"session":null,"organization":null,"locale":null}
+{"event":"money_plugin_tool_call","plugin":"test","tool":"compute","ok":false,"elapsed_ms":0,"subject":null,"session":null,"organization":null,"locale":null}
+{"event":"money_plugin_tool_call","plugin":"test","tool":"compute","ok":false,"elapsed_ms":0,"subject":null,"session":null,"organization":null,"locale":null}
+{"event":"money_plugin_tool_call","plugin":"test","tool":"compute","ok":false,"elapsed_ms":0,"subject":null,"session":null,"organization":null,"locale":null}
+{"event":"money_plugin_tool_call","plugin":"test","tool":"compute","ok":false,"elapsed_ms":0,"subject":null,"session":null,"organization":null,"locale":null}
+✔ Reject missing, wrong-type, negative, unknown and nested invalid inputs (2.73582ms)
+✔ Successful calls log only pseudonyms and technical metadata (1.034608ms)
+✔ Tool metadata describes stateless read-only behavior (0.963352ms)
+✔ Unknown tool is a protocol error; notifications have no body (0.356506ms)
+✔ ScopeGuard prices three bands (1.51026ms)
+✔ ScopeGuard change price (0.221187ms)
+✔ BidReady blocks failed eligibility (0.391958ms)
+✔ BidReady strong opportunity (0.184112ms)
+✔ RefundRadar detects standard return (0.334263ms)
+✔ RefundRadar recovery arithmetic (0.266965ms)
+✔ InvoiceChaser calculates outstanding amount (0.344058ms)
+✔ InvoiceChaser pauses collection escalation on dispute (0.159044ms)
+✔ GrantFit blocks failed eligibility (0.374293ms)
+✔ GrantFit approves strong fit (0.317709ms)
+✔ VendorGuard normalizes TCO (0.404998ms)
+✔ VendorGuard compounds annual increase (3.518636ms)
+✔ DealDesk detects margin miss (0.545295ms)
+✔ DealDesk calculates floor price (0.096944ms)
+✔ RenewalRadar surfaces notice-window risk (0.234266ms)
+✔ RenewalRadar estimates under-use (0.19632ms)
+✔ TravelClaim classifies major disruption (0.231331ms)
+✔ TravelClaim totals documented expenses (0.208508ms)
+✔ CashLeak flags severe under-use (0.151053ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 112.425449

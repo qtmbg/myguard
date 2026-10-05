@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Normalize simple quote",
-              "prompt": "Vendor A charges $1,000 setup plus $500 per month for 12 months. What is the real cost?",
+              "prompt": "Vendor A charges $1,000 setup plus $500 per month for 12 months. What is the real cost?\n\nSynthetic reviewer inputs: {\"monthly_fee\": 500, \"one_time_fee\": 1000, \"term_months\": 12}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "normalize_vendor_quote",
               "expected_behavior": "Return total cost of ownership and effective monthly cost."
             },
             {
               "description": "Include implementation",
-              "prompt": "Quote is $15k implementation plus $2k per month for 24 months.",
+              "prompt": "Quote is $15k implementation plus $2k per month for 24 months.\n\nSynthetic reviewer inputs: {\"implementation_fee\": 15000, \"monthly_fee\": 2000, \"term_months\": 24}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "normalize_vendor_quote",
               "expected_behavior": "Include one-time and recurring costs over the full comparison term."
             },
             {
               "description": "Annual increase",
-              "prompt": "Monthly fee is $1,000 with a 10% annual increase over 24 months.",
+              "prompt": "Monthly fee is $1,000 with a 10% annual increase over 24 months.\n\nSynthetic reviewer inputs: {\"annual_price_increase_percent\": 10, \"monthly_fee\": 1000, \"term_months\": 24}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "normalize_vendor_quote",
               "expected_behavior": "Compound the stated annual increase and return normalized TCO."
             },
             {
               "description": "Usage fees",
-              "prompt": "Base is $800/month plus an estimated $300/month in usage and $200 support.",
+              "prompt": "Base is $800/month plus an estimated $300/month in usage and $200 support.\n\nSynthetic reviewer inputs: {\"estimated_monthly_usage_fee\": 300, \"monthly_fee\": 800, \"monthly_support_fee\": 200, \"term_months\": 12}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "normalize_vendor_quote",
               "expected_behavior": "Include all supplied recurring cost components."
             },
             {
               "description": "Exit cost",
-              "prompt": "This vendor has a $5,000 expected migration cost at exit. Compare over 36 months.",
+              "prompt": "This vendor has a $5,000 expected migration cost at exit. Compare over 36 months.\n\nSynthetic reviewer inputs: {\"expected_exit_cost\": 5000, \"monthly_fee\": 1000, \"term_months\": 36}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "normalize_vendor_quote",
               "expected_behavior": "Include the supplied exit cost and make the assumption explicit."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/compare-vendor-quotes/SKILL.md"
     }
   }
 }

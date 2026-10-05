@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Notice window risk",
-              "prompt": "This auto-renews in 20 days and requires 30 days notice. Annual spend is $12k and usage is 30%.",
+              "prompt": "This auto-renews in 20 days and requires 30 days notice. Annual spend is $12k and usage is 30%.\n\nSynthetic reviewer inputs: {\"annualized_spend\": 12000, \"auto_renews\": true, \"criticality\": 50, \"days_to_renewal\": 20, \"notice_period_days\": 30, \"overlap_score\": 0, \"utilization_percent\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_renewal",
               "expected_behavior": "Flag the notice window as at risk and surface under-utilized spend."
             },
             {
               "description": "Under-used SaaS",
-              "prompt": "Annual spend $24k, usage 25%, overlap score 70, criticality 20, renewal in 90 days.",
+              "prompt": "Annual spend $24k, usage 25%, overlap score 70, criticality 20, renewal in 90 days.\n\nSynthetic reviewer inputs: {\"annualized_spend\": 24000, \"auto_renews\": true, \"criticality\": 20, \"days_to_renewal\": 90, \"notice_period_days\": 30, \"overlap_score\": 70, \"utilization_percent\": 25}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_renewal",
               "expected_behavior": "Prioritize review and quantify under-utilized spend."
             },
             {
               "description": "High price increase",
-              "prompt": "Vendor wants a 20% increase at renewal. Usage is high but we have 60 days.",
+              "prompt": "Vendor wants a 20% increase at renewal. Usage is high but we have 60 days.\n\nSynthetic reviewer inputs: {\"annualized_spend\": 12000, \"auto_renews\": true, \"criticality\": 50, \"days_to_renewal\": 60, \"notice_period_days\": 30, \"overlap_score\": 0, \"price_increase_percent\": 20, \"utilization_percent\": 95}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_renewal",
               "expected_behavior": "Reflect the price increase as renegotiation pressure."
             },
             {
               "description": "Critical tool",
-              "prompt": "Usage and criticality are both 100 with little overlap and modest spend.",
+              "prompt": "Usage and criticality are both 100 with little overlap and modest spend.\n\nSynthetic reviewer inputs: {\"annualized_spend\": 3000, \"auto_renews\": true, \"criticality\": 100, \"days_to_renewal\": 90, \"notice_period_days\": 30, \"overlap_score\": 0, \"utilization_percent\": 100}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_renewal",
               "expected_behavior": "Keep criticality visible and avoid treating low savings potential as a cancellation case."
             },
             {
               "description": "Auto-renew timing",
-              "prompt": "Contract auto-renews in 45 days with a 30-day notice period.",
+              "prompt": "Contract auto-renews in 45 days with a 30-day notice period.\n\nSynthetic reviewer inputs: {\"annualized_spend\": 12000, \"auto_renews\": true, \"criticality\": 50, \"days_to_renewal\": 45, \"notice_period_days\": 30, \"overlap_score\": 0, \"utilization_percent\": 30}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "assess_renewal",
               "expected_behavior": "Calculate the remaining days until the notice deadline."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/review-upcoming-renewals/SKILL.md"
     }
   }
 }

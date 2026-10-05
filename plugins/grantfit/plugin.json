@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Strong fit",
-              "prompt": "Eligibility passes, we cover 9 of 10 mandatory items, fit is 90, evidence 90, co-funding 90, 20 hours of work and 14 days left. Should we apply?",
+              "prompt": "Eligibility passes, we cover 9 of 10 mandatory items, fit is 90, evidence 90, co-funding 90, 20 hours of work and 14 days left. Should we apply?\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_grant_opportunity",
               "expected_behavior": "Return a high score and APPLY recommendation."
             },
             {
               "description": "Failed eligibility",
-              "prompt": "We fail one mandatory applicant eligibility gate. Should we still apply?",
+              "prompt": "We fail one mandatory applicant eligibility gate. Should we still apply?\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": false, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_grant_opportunity",
               "expected_behavior": "Return NO_GO because eligibility fails."
             },
             {
               "description": "Weak evidence",
-              "prompt": "Eligibility passes but evidence readiness is 35 and we have two critical gaps.",
+              "prompt": "Eligibility passes but evidence readiness is 35 and we have two critical gaps.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 2, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 35, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_grant_opportunity",
               "expected_behavior": "Lower the score and explain missing evidence."
             },
             {
               "description": "Co-funding risk",
-              "prompt": "The call requires co-funding and our co-funding readiness is 20 out of 100.",
+              "prompt": "The call requires co-funding and our co-funding readiness is 20 out of 100.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 20, \"critical_gaps\": 0, \"days_to_deadline\": 14, \"eligibility_pass\": true, \"estimated_application_hours\": 20, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_grant_opportunity",
-              "expected_behavior": "Reflect co-funding as a material application risk."
+              "expected_behavior": "Quantify co-funding risk; a weighted APPLY score is provisional and cannot override a mandatory unfulfilled co-funding gate. Verify actual secured funds before committing."
             },
             {
               "description": "Deadline pressure",
-              "prompt": "Application needs 50 hours and the deadline is in 4 days.",
+              "prompt": "Application needs 50 hours and the deadline is in 4 days.\n\nSynthetic reviewer inputs: {\"cofunding_readiness\": 90, \"critical_gaps\": 0, \"days_to_deadline\": 4, \"eligibility_pass\": true, \"estimated_application_hours\": 50, \"evidence_readiness\": 90, \"mandatory_covered\": 9, \"mandatory_total\": 10, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_grant_opportunity",
               "expected_behavior": "Reflect application-capacity pressure."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/qualify-grant-opportunities/SKILL.md"
     }
   }
 }

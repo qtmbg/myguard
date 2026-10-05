@@ -48,31 +48,31 @@
           "positive": [
             {
               "description": "Strong opportunity",
-              "prompt": "We pass eligibility, cover 19 of 20 mandatory requirements, have no critical gaps, strategic fit 90, delivery fit 90, evidence 90, 24 hours of work and 10 days left. Should we bid?",
+              "prompt": "We pass eligibility, cover 19 of 20 mandatory requirements, have no critical gaps, strategic fit 90, delivery fit 90, evidence 90, 24 hours of work and 10 days left. Should we bid?\n\nSynthetic reviewer inputs: {\"critical_gaps\": 0, \"days_to_deadline\": 10, \"delivery_fit\": 90, \"eligibility_pass\": true, \"estimated_response_hours\": 24, \"evidence_readiness\": 90, \"mandatory_covered\": 19, \"mandatory_total\": 20, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_bid_opportunity",
               "expected_behavior": "Return a high score and BID recommendation with reasons."
             },
             {
               "description": "Failed eligibility",
-              "prompt": "We fail one stated eligibility gate but otherwise look strong. Score this opportunity.",
+              "prompt": "We fail one stated eligibility gate but otherwise look strong. Score this opportunity.\n\nSynthetic reviewer inputs: {\"critical_gaps\": 0, \"days_to_deadline\": 10, \"delivery_fit\": 90, \"eligibility_pass\": false, \"estimated_response_hours\": 24, \"evidence_readiness\": 90, \"mandatory_covered\": 19, \"mandatory_total\": 20, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_bid_opportunity",
               "expected_behavior": "Return NO_BID because an eligibility gate is not met."
             },
             {
               "description": "Deadline pressure",
-              "prompt": "We need 60 hours to respond and have 3 days left. Eligibility passes and evidence readiness is 55. Score it.",
+              "prompt": "We need 60 hours to respond and have 3 days left. Eligibility passes and evidence readiness is 55. Score it.\n\nSynthetic reviewer inputs: {\"critical_gaps\": 0, \"days_to_deadline\": 3, \"delivery_fit\": 90, \"eligibility_pass\": true, \"estimated_response_hours\": 60, \"evidence_readiness\": 55, \"mandatory_covered\": 19, \"mandatory_total\": 20, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_bid_opportunity",
               "expected_behavior": "Reflect workload and evidence risk in the score."
             },
             {
               "description": "Evidence gaps",
-              "prompt": "We meet eligibility but only 12 of 18 mandatory requirements are evidenced. Score the bid.",
+              "prompt": "We meet eligibility but only 12 of 18 mandatory requirements are evidenced. Score the bid.\n\nSynthetic reviewer inputs: {\"critical_gaps\": 0, \"days_to_deadline\": 10, \"delivery_fit\": 90, \"eligibility_pass\": true, \"estimated_response_hours\": 24, \"evidence_readiness\": 50, \"mandatory_covered\": 12, \"mandatory_total\": 18, \"strategic_fit\": 90}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_bid_opportunity",
               "expected_behavior": "Reflect incomplete mandatory coverage and evidence gaps."
             },
             {
               "description": "Conditional bid",
-              "prompt": "Eligibility passes but there are two critical gaps and moderate strategic fit. Should we pursue?",
+              "prompt": "Eligibility passes but there are two critical gaps and moderate strategic fit. Should we pursue?\n\nSynthetic reviewer inputs: {\"critical_gaps\": 2, \"days_to_deadline\": 10, \"delivery_fit\": 65, \"eligibility_pass\": true, \"estimated_response_hours\": 24, \"evidence_readiness\": 60, \"mandatory_covered\": 19, \"mandatory_total\": 20, \"strategic_fit\": 60}. All unlisted optional monetary costs are confirmed zero for this test; all currencies are USD unless stated. Use these supplied values, keep policy/contract verification separate, and expose assumptions.",
               "tools_triggered": "score_bid_opportunity",
               "expected_behavior": "Return a cautious score and explain what must change."
             }
@@ -99,8 +99,9 @@
         "commerce_description": "This plugin does not sell products or process payments in version 1.0."
       },
       "publication": {
-        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
-      }
+        "release_notes": "Initial public release. Includes typed-input validation, explicit read-only tool annotations, pseudonymous technical telemetry, deterministic review fixtures, and no commerce."
+      },
+      "onboardingSkill": "./skills/qualify-and-prepare-bids/SKILL.md"
     }
   }
 }

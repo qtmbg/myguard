@@ -1,0 +1,59 @@
+[
+  {
+    "index": 1,
+    "tool": "assess_refund_case",
+    "arguments": {
+      "purchase_age_days": 10,
+      "return_window_days": 30
+    },
+    "expected_fields": {
+      "route": "STANDARD_RETURN"
+    }
+  },
+  {
+    "index": 2,
+    "tool": "assess_refund_case",
+    "arguments": {
+      "purchase_age_days": 2,
+      "auto_renewal_days_ago": 2,
+      "policy_allows_exception": true
+    },
+    "expected_fields": {
+      "route": "AUTO_RENEWAL"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "assess_refund_case",
+    "arguments": {
+      "purchase_age_days": 1,
+      "duplicate_charge": true
+    },
+    "expected_fields": {
+      "route": "DUPLICATE_CHARGE"
+    }
+  },
+  {
+    "index": 4,
+    "tool": "assess_refund_case",
+    "arguments": {
+      "purchase_age_days": 180,
+      "item_defective": true,
+      "policy_allows_exception": true
+    },
+    "expected_fields": {
+      "route": "DEFECT_OR_WARRANTY"
+    }
+  },
+  {
+    "index": 5,
+    "tool": "assess_refund_case",
+    "arguments": {
+      "purchase_age_days": 14,
+      "service_not_delivered": true
+    },
+    "expected_fields": {
+      "route": "NON_DELIVERY"
+    }
+  }
+]

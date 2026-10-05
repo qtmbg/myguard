@@ -1,0 +1,75 @@
+[
+  {
+    "index": 1,
+    "tool": "classify_spend_leak",
+    "arguments": {
+      "monthly_cost": 1000,
+      "utilization_percent": 10,
+      "overlap_score": 90,
+      "essentiality": 10,
+      "owner_known": false
+    },
+    "expected_fields": {
+      "estimated_underutilized_spend": 10800,
+      "action": "CUT_OR_RENEGOTIATE"
+    }
+  },
+  {
+    "index": 2,
+    "tool": "classify_spend_leak",
+    "arguments": {
+      "monthly_cost": 2000,
+      "utilization_percent": 95,
+      "overlap_score": 0,
+      "essentiality": 100,
+      "owner_known": true
+    },
+    "expected_fields": {
+      "action": "KEEP_MONITORED"
+    }
+  },
+  {
+    "index": 3,
+    "tool": "classify_spend_leak",
+    "arguments": {
+      "monthly_cost": 1000,
+      "price_increase_percent": 25,
+      "utilization_percent": 70,
+      "overlap_score": 50,
+      "essentiality": 40,
+      "owner_known": true
+    },
+    "expected_fields": {
+      "review_priority": 40
+    }
+  },
+  {
+    "index": 4,
+    "tool": "classify_spend_leak",
+    "arguments": {
+      "monthly_cost": 600,
+      "utilization_percent": 50,
+      "overlap_score": 60,
+      "essentiality": 40,
+      "owner_known": false
+    },
+    "expected_fields": {
+      "review_priority": 44
+    }
+  },
+  {
+    "index": 5,
+    "tool": "classify_spend_leak",
+    "arguments": {
+      "monthly_cost": 300,
+      "utilization_percent": 40,
+      "overlap_score": 30,
+      "essentiality": 50,
+      "owner_known": true
+    },
+    "expected_fields": {
+      "annualized_cost": 3600,
+      "estimated_underutilized_spend": 2160
+    }
+  }
+]
