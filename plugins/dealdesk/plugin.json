@@ -1,0 +1,47 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dealdesk",
+  "version": "1.0.0",
+  "description": "DealDesk evaluates proposed prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics.",
+  "author": {
+    "name": "QTMBG LLC",
+    "url": "https://money-plugins-qtmbg.vercel.app"
+  },
+  "homepage": "https://money-plugins-qtmbg.vercel.app/dealdesk",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": [
+    "deal",
+    "discount",
+    "margin",
+    "pricing",
+    "sales"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "DealDesk",
+        "shortDescription": "Protect margin before approving a deal.",
+        "longDescription": "DealDesk evaluates proposed prices and discounts against user-supplied cost-to-serve and target margin, showing gross profit, gross margin, target status, and the minimum price needed to protect economics.",
+        "developerName": "QTMBG LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Evaluate deal economics",
+          "Calculate discount impact",
+          "Protect target margin",
+          "Find minimum viable price"
+        ],
+        "websiteURL": "https://money-plugins-qtmbg.vercel.app/dealdesk",
+        "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+        "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+        "defaultPrompt": [
+          "Can I give this discount and still hit margin?",
+          "What is the lowest price we can accept?",
+          "Evaluate this deal before I approve it."
+        ],
+        "brandColor": "#111111",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}
