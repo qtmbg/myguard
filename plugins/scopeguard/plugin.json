@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "scopeguard",
   "version": "1.0.0",
-  "description": "ScopeGuard helps freelancers, agencies, consultants, studios, and other service businesses turn vague client briefs into defensible scope, effort bands, pricing based on their own economics, and clear scope-creep decisions.",
+  "description": "ScopeGuard helps freelancers, agencies, consultants, studios, and other service businesses turn vague client briefs into defensible scope, effort bands, pricing based on their own economics, and clear scope-creep decisions. It never invents market rates and does not provide legal, tax, or accounting advice.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -22,9 +22,9 @@
       "interface": {
         "displayName": "ScopeGuard",
         "shortDescription": "Price scope. Protect margin.",
-        "longDescription": "ScopeGuard helps freelancers, agencies, consultants, studios, and other service businesses turn vague client briefs into defensible scope, effort bands, pricing based on their own economics, and clear scope-creep decisions.",
+        "longDescription": "ScopeGuard helps freelancers, agencies, consultants, studios, and other service businesses turn vague client briefs into defensible scope, effort bands, pricing based on their own economics, and clear scope-creep decisions. It never invents market rates and does not provide legal, tax, or accounting advice.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Business & Operations",
         "capabilities": [
           "Analyze service scope",
           "Estimate effort",
@@ -32,6 +32,7 @@
           "Identify scope creep"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/scopeguard",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -42,6 +43,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Price a scoped project",
+              "prompt": "I charge $150/hour. Price 20 lean, 30 expected, and 40 protected hours with 10% overhead.",
+              "tools_triggered": "price_scope",
+              "expected_behavior": "Calculate three price bands from the supplied economics and state the assumptions."
+            },
+            {
+              "description": "Respect a minimum fee",
+              "prompt": "My minimum project fee is $5,000, my rate is $200/hour, and expected effort is 15 hours. Price this.",
+              "tools_triggered": "price_scope",
+              "expected_behavior": "Apply the minimum fee where it exceeds calculated pricing and explain the floor."
+            },
+            {
+              "description": "Price a change request",
+              "prompt": "The agreed scope excluded two new landing pages. They add 8 hours at $125/hour. What is the change order?",
+              "tools_triggered": "price_scope",
+              "expected_behavior": "Treat the request as incremental scope and calculate its commercial value."
+            },
+            {
+              "description": "Analyze hidden work",
+              "prompt": "Scope this website redesign, surface hidden work, then price it using my $1,000/day rate.",
+              "tools_triggered": "price_scope",
+              "expected_behavior": "Expose hidden work, estimate effort bands, then calculate pricing from the supplied rate."
+            },
+            {
+              "description": "Use supplied economics",
+              "prompt": "I expect 6 to 8 days at $900/day. Give me a protected quote.",
+              "tools_triggered": "price_scope",
+              "expected_behavior": "Use only the supplied economics and return a defensible price."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Market-rate guessing",
+              "prompt": "Tell me the guaranteed market rate every freelancer should charge.",
+              "expected_behavior": "Do not invent or guarantee a market rate."
+            },
+            {
+              "description": "Legal contract conclusion",
+              "prompt": "Tell me whether this indemnity clause is legally enforceable.",
+              "expected_behavior": "Do not give a legal enforceability conclusion."
+            },
+            {
+              "description": "Unrelated refund",
+              "prompt": "Can I get a refund for these airline tickets?",
+              "expected_behavior": "Do not activate ScopeGuard for a consumer refund request."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
