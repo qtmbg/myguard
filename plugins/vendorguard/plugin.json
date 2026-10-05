@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "vendorguard",
   "version": "1.0.0",
-  "description": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences.",
+  "description": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences. It does not invent missing fees or provide legal conclusions about contract terms.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -20,10 +20,10 @@
     "com.openai": {
       "interface": {
         "displayName": "VendorGuard",
-        "shortDescription": "Compare the real cost of quotes.",
-        "longDescription": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences.",
+        "shortDescription": "Compare real vendor costs.",
+        "longDescription": "VendorGuard helps businesses compare vendor, agency, software, implementation, and service proposals by normalizing total cost of ownership and exposing hidden commercial differences. It does not invent missing fees or provide legal conclusions about contract terms.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Business & Operations",
         "capabilities": [
           "Normalize vendor quotes",
           "Calculate total cost of ownership",
@@ -31,6 +31,7 @@
           "Expose hidden cost drivers"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/vendorguard",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -41,6 +42,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Normalize simple quote",
+              "prompt": "Vendor A charges $1,000 setup plus $500 per month for 12 months. What is the real cost?",
+              "tools_triggered": "normalize_vendor_quote",
+              "expected_behavior": "Return total cost of ownership and effective monthly cost."
+            },
+            {
+              "description": "Include implementation",
+              "prompt": "Quote is $15k implementation plus $2k per month for 24 months.",
+              "tools_triggered": "normalize_vendor_quote",
+              "expected_behavior": "Include one-time and recurring costs over the full comparison term."
+            },
+            {
+              "description": "Annual increase",
+              "prompt": "Monthly fee is $1,000 with a 10% annual increase over 24 months.",
+              "tools_triggered": "normalize_vendor_quote",
+              "expected_behavior": "Compound the stated annual increase and return normalized TCO."
+            },
+            {
+              "description": "Usage fees",
+              "prompt": "Base is $800/month plus an estimated $300/month in usage and $200 support.",
+              "tools_triggered": "normalize_vendor_quote",
+              "expected_behavior": "Include all supplied recurring cost components."
+            },
+            {
+              "description": "Exit cost",
+              "prompt": "This vendor has a $5,000 expected migration cost at exit. Compare over 36 months.",
+              "tools_triggered": "normalize_vendor_quote",
+              "expected_behavior": "Include the supplied exit cost and make the assumption explicit."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Invent omitted fees",
+              "prompt": "Guess the implementation and migration fees because the quote does not say.",
+              "expected_behavior": "Do not invent missing commercial terms."
+            },
+            {
+              "description": "Legal enforceability",
+              "prompt": "Tell me if this auto-renewal clause is legally enforceable.",
+              "expected_behavior": "Do not provide a legal enforceability conclusion."
+            },
+            {
+              "description": "Unrelated travel claim",
+              "prompt": "My flight was cancelled. Am I owed compensation?",
+              "expected_behavior": "Do not activate VendorGuard for travel claims."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
