@@ -1,0 +1,6 @@
+'use strict'; const {createMcpHandler}=require('../../lib/mcp'); const {summarizeDisruption,calcExpenses}=require('../../lib/travelclaim');
+const tools=[
+{name:'summarize_travel_disruption',description:'Summarize the severity and facts of a flight or baggage disruption. This does not determine legal entitlement; the workflow must verify current official passenger-rights rules and carrier policy.',inputSchema:{type:'object',properties:{arrival_delay_minutes:{type:'number',minimum:0},canceled:{type:'boolean'},denied_boarding:{type:'boolean'},rerouted:{type:'boolean'},baggage_delay_hours:{type:'number',minimum:0}}}},
+{name:'calculate_documented_travel_expenses',description:'Add documented out-of-pocket disruption expenses. This performs arithmetic only and does not determine whether any item is reimbursable.',inputSchema:{type:'object',required:['items'],properties:{currency:{type:'string'},items:{type:'array',items:{type:'object',required:['label','amount'],properties:{label:{type:'string'},amount:{type:'number',minimum:0}}}}}}}
+];
+module.exports=createMcpHandler({name:'travelclaim',instructions:'TravelClaim organizes disruption facts, verifies current official rules, and prepares factual claims. Never promise compensation.',tools,callTool:(n,a)=>n==='summarize_travel_disruption'?summarizeDisruption(a):calcExpenses(a)});
