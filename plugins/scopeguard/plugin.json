@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "scopeguard",
+  "version": "1.0.0",
+  "description": "ScopeGuard helps freelancers, agencies, consultants, studios and other service businesses turn vague client briefs into defensible scope, effort bands and pricing based on their own economics. It also helps identify scope creep and quantify change requests. It never invents market rates and is not legal, tax or accounting advice.",
+  "author": {"name": "QTMBG LLC", "url": "https://money-plugins-qtmbg.vercel.app"},
+  "homepage": "https://money-plugins-qtmbg.vercel.app/scopeguard",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": ["scope","pricing","freelance","agency","proposal","scope creep"],
+  "extensions": {"com.openai": {
+    "interface": {
+      "displayName": "ScopeGuard",
+      "shortDescription": "Price scope. Protect margin.",
+      "longDescription": "ScopeGuard helps freelancers, agencies, consultants, studios and other service businesses turn vague client briefs into defensible scope, effort bands and pricing based on their own economics. It also helps identify scope creep and quantify change requests. It never invents market rates and is not legal, tax or accounting advice.",
+      "developerName": "QTMBG LLC",
+      "category": "Productivity",
+      "capabilities": ["Analyze project scope","Estimate service effort","Calculate pricing","Identify scope creep"],
+      "websiteURL": "https://money-plugins-qtmbg.vercel.app/scopeguard",
+      "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
+      "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+      "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+      "defaultPrompt": ["What should I charge for this client brief?","Turn this messy brief into a proposal-ready scope.","Is this new client request scope creep?"],
+      "brandColor": "#111111",
+      "composerIcon": "./assets/icon.svg",
+      "logo": "./assets/logo.svg"
+    },
+    "onboardingSkill": "./skills/scope-and-price-client-work/SKILL.md",
+    "review": {
+      "test_cases": {
+        "positive": [
+          {"description":"Price a client brief","prompt":"I charge $150/hour. Scope this website redesign as 20 lean, 30 expected, 40 protected hours with 10% overhead. What should I quote?","tools_triggered":"price_scope","expected_behavior":"Return Lean, Expected and Protected pricing from the supplied economics and clearly state assumptions."},
+          {"description":"Respect a minimum fee","prompt":"My minimum project fee is $5,000, my rate is $200/hour, and expected effort is 15 hours. Price the scope.","tools_triggered":"price_scope","expected_behavior":"Apply the minimum fee where it exceeds calculated pricing and explain that the floor is driving the result."},
+          {"description":"Price a change request","prompt":"The agreed scope excluded extra landing pages. Client now wants two more, estimated at 8 hours. My rate is $125/hour. What should the change order be?","tools_triggered":"price_scope_change","expected_behavior":"Treat the request as incremental scope and calculate the commercial value from the supplied effort and rate."},
+          {"description":"Analyze before pricing","prompt":"Scope this brand strategy brief, surface hidden work, and price it using my $1,000/day rate once you have Lean, Expected and Protected effort.","tools_triggered":"price_scope","expected_behavior":"Expose hidden work, state assumptions, estimate three effort bands, then calculate three prices."},
+          {"description":"Avoid invented rates","prompt":"Scope this social-media retainer. I did not give you my rate.","tools_triggered":"price_scope","expected_behavior":"Analyze scope and effort but do not invent a rate; ask for the user economics only if a price is required."}
+        ],
+        "negative": [
+          {"description":"Market-rate guessing","prompt":"Tell me the guaranteed market rate every freelancer should charge for this project."},
+          {"description":"Legal contract advice","prompt":"Rewrite this indemnity clause and tell me if it is legally enforceable."},
+          {"description":"Unrelated purchase refund","prompt":"Can I get a refund for these airline tickets?"}
+        ]
+      },
+      "commerce": false,
+      "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+    },
+    "publication": {"release_notes": "Initial release: service-scope analysis workflow plus pricing and change-order calculation tools."}
+  }}
+}
