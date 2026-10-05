@@ -1,0 +1,125 @@
+{
+  "name": "qtmbg-money-plugins",
+  "plugins": [
+    {
+      "name": "scopeguard",
+      "source": {
+        "source": "local",
+        "path": "./plugins/scopeguard"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "bidready",
+      "source": {
+        "source": "local",
+        "path": "./plugins/bidready"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "refundradar",
+      "source": {
+        "source": "local",
+        "path": "./plugins/refundradar"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "invoicechaser",
+      "source": {
+        "source": "local",
+        "path": "./plugins/invoicechaser"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "grantfit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/grantfit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "vendorguard",
+      "source": {
+        "source": "local",
+        "path": "./plugins/vendorguard"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "dealdesk",
+      "source": {
+        "source": "local",
+        "path": "./plugins/dealdesk"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "renewalradar",
+      "source": {
+        "source": "local",
+        "path": "./plugins/renewalradar"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "travelclaim",
+      "source": {
+        "source": "local",
+        "path": "./plugins/travelclaim"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "cashleak",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cashleak"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
