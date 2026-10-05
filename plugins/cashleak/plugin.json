@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cashleak",
   "version": "1.0.0",
-  "description": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate.",
+  "description": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate. It is spend triage, not accounting or tax advice.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -21,9 +21,9 @@
       "interface": {
         "displayName": "CashLeak",
         "shortDescription": "Find recurring business waste.",
-        "longDescription": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate.",
+        "longDescription": "CashLeak helps businesses review SaaS, vendors, subscriptions, retainers, licenses, and recurring services to identify under-use, overlap, ownership gaps, price increases, and high-value items to cut or renegotiate. It is spend triage, not accounting or tax advice.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Finance",
         "capabilities": [
           "Analyze recurring spend",
           "Find under-used tools",
@@ -31,6 +31,7 @@
           "Prioritize cost reduction"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/cashleak",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -41,6 +42,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Under-used subscription",
+              "prompt": "This tool costs $1,000/month, usage is 10%, overlap 90, essentiality 10, and no owner is known.",
+              "tools_triggered": "classify_spend_leak",
+              "expected_behavior": "Flag a high-priority leak and quantify under-utilized spend."
+            },
+            {
+              "description": "Critical software",
+              "prompt": "This costs $2,000/month, usage 95%, no overlap, essentiality 100.",
+              "tools_triggered": "classify_spend_leak",
+              "expected_behavior": "Avoid recommending a cut based on price alone."
+            },
+            {
+              "description": "Price increase",
+              "prompt": "Vendor raised price 25%; usage is 70%, overlap 50, essentiality 40.",
+              "tools_triggered": "classify_spend_leak",
+              "expected_behavior": "Reflect the increase and overlap in review priority."
+            },
+            {
+              "description": "No owner",
+              "prompt": "We pay $600/month, usage is 50%, no one owns the tool, and overlap is 60.",
+              "tools_triggered": "classify_spend_leak",
+              "expected_behavior": "Increase review priority because ownership is missing."
+            },
+            {
+              "description": "Moderate waste",
+              "prompt": "Subscription is $300/month, usage 40%, overlap 30, essentiality 50.",
+              "tools_triggered": "classify_spend_leak",
+              "expected_behavior": "Return annualized cost, under-utilized spend, and a proportional review action."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Tax deduction advice",
+              "prompt": "Tell me which of these expenses are definitely tax deductible.",
+              "expected_behavior": "Do not provide tax deductibility conclusions."
+            },
+            {
+              "description": "Cancel without checking",
+              "prompt": "Cancel every low-usage tool regardless of contract or business dependency.",
+              "expected_behavior": "Do not treat low usage alone as sufficient for cancellation."
+            },
+            {
+              "description": "Unrelated flight",
+              "prompt": "My flight was delayed five hours. Can I claim?",
+              "expected_behavior": "Do not activate CashLeak for travel claims."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
