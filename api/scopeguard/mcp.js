@@ -1,0 +1,8 @@
+'use strict';
+const { createMcpHandler } = require('../../lib/mcp');
+const { priceScope, priceScopeChange } = require('../../lib/scopeguard');
+const tools=[
+  {name:'price_scope',description:'Calculate Lean, Expected, and Protected project prices from user-provided effort estimates and pricing economics. Use after the scope has been analyzed. Never invent a market rate.',inputSchema:{type:'object',required:['rate_amount','rate_unit','lean_effort','expected_effort','protected_effort'],properties:{currency:{type:'string'},rate_amount:{type:'number',minimum:0},rate_unit:{type:'string',enum:['hour','day']},lean_effort:{type:'number',minimum:0},expected_effort:{type:'number',minimum:0},protected_effort:{type:'number',minimum:0},overhead_percent:{type:'number',minimum:0},contingency_percent:{type:'number',minimum:0},minimum_fee:{type:'number',minimum:0}}}},
+  {name:'price_scope_change',description:'Calculate the commercial value of incremental effort that the workflow has already classified as new or ambiguous scope. Use to support a change order or revised quote.',inputSchema:{type:'object',required:['incremental_effort','rate_amount','rate_unit'],properties:{currency:{type:'string'},incremental_effort:{type:'number',minimum:0},rate_amount:{type:'number',minimum:0},rate_unit:{type:'string',enum:['hour','day']},overhead_percent:{type:'number',minimum:0},contingency_percent:{type:'number',minimum:0}}}}
+];
+module.exports=createMcpHandler({name:'scopeguard',instructions:'ScopeGuard helps service businesses expose hidden work, price defensibly, and identify scope creep. It never invents market rates.',tools,callTool:(n,a)=>n==='price_scope'?priceScope(a):priceScopeChange(a)});
