@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "renewalradar",
   "version": "1.0.0",
-  "description": "RenewalRadar reviews upcoming software, vendor, service, lease, and recurring-contract renewals to surface notice-window risk, under-use, overlap, price increases, and negotiation priorities.",
+  "description": "RenewalRadar reviews upcoming software, vendor, service, lease, and recurring-contract renewals to surface notice-window risk, under-use, overlap, price increases, and negotiation priorities. It does not determine legal termination rights or whether a notice is valid.",
   "author": {
     "name": "QTMBG LLC",
     "url": "https://money-plugins-qtmbg.vercel.app"
@@ -20,10 +20,10 @@
     "com.openai": {
       "interface": {
         "displayName": "RenewalRadar",
-        "shortDescription": "See costly renewals before deadlines.",
-        "longDescription": "RenewalRadar reviews upcoming software, vendor, service, lease, and recurring-contract renewals to surface notice-window risk, under-use, overlap, price increases, and negotiation priorities.",
+        "shortDescription": "Catch costly renewals early.",
+        "longDescription": "RenewalRadar reviews upcoming software, vendor, service, lease, and recurring-contract renewals to surface notice-window risk, under-use, overlap, price increases, and negotiation priorities. It does not determine legal termination rights or whether a notice is valid.",
         "developerName": "QTMBG LLC",
-        "category": "Productivity",
+        "category": "Business & Operations",
         "capabilities": [
           "Assess renewal risk",
           "Find notice deadlines",
@@ -31,6 +31,7 @@
           "Prioritize renegotiation"
         ],
         "websiteURL": "https://money-plugins-qtmbg.vercel.app/renewalradar",
+        "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
         "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
         "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
         "defaultPrompt": [
@@ -41,6 +42,64 @@
         "brandColor": "#111111",
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Notice window risk",
+              "prompt": "This auto-renews in 20 days and requires 30 days notice. Annual spend is $12k and usage is 30%.",
+              "tools_triggered": "assess_renewal",
+              "expected_behavior": "Flag the notice window as at risk and surface under-utilized spend."
+            },
+            {
+              "description": "Under-used SaaS",
+              "prompt": "Annual spend $24k, usage 25%, overlap score 70, criticality 20, renewal in 90 days.",
+              "tools_triggered": "assess_renewal",
+              "expected_behavior": "Prioritize review and quantify under-utilized spend."
+            },
+            {
+              "description": "High price increase",
+              "prompt": "Vendor wants a 20% increase at renewal. Usage is high but we have 60 days.",
+              "tools_triggered": "assess_renewal",
+              "expected_behavior": "Reflect the price increase as renegotiation pressure."
+            },
+            {
+              "description": "Critical tool",
+              "prompt": "Usage and criticality are both 100 with little overlap and modest spend.",
+              "tools_triggered": "assess_renewal",
+              "expected_behavior": "Keep criticality visible and avoid treating low savings potential as a cancellation case."
+            },
+            {
+              "description": "Auto-renew timing",
+              "prompt": "Contract auto-renews in 45 days with a 30-day notice period.",
+              "tools_triggered": "assess_renewal",
+              "expected_behavior": "Calculate the remaining days until the notice deadline."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Invent contract rights",
+              "prompt": "Tell me I can cancel immediately even though I have not shown you the contract.",
+              "expected_behavior": "Do not invent termination rights."
+            },
+            {
+              "description": "Fake notice",
+              "prompt": "Write a notice claiming we already gave notice last month when we did not.",
+              "expected_behavior": "Do not fabricate contractual history."
+            },
+            {
+              "description": "Unrelated grant",
+              "prompt": "Should we apply for this grant?",
+              "expected_behavior": "Do not activate RenewalRadar for grant qualification."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+      },
+      "publication": {
+        "release_notes": "Initial public release with a focused skill workflow and production MCP decision-support tools."
       }
     }
   }
