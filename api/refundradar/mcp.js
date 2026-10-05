@@ -1,0 +1,8 @@
+'use strict';
+const { createMcpHandler } = require('../../lib/mcp');
+const { assessRefund, recoveryAmount } = require('../../lib/refundradar');
+const tools=[
+  {name:'assess_refund_case',description:'Assess refund or recovery signals from user-provided facts and a stated merchant/provider policy. Use only as decision support, verify current authoritative terms and local rules, and never promise that a refund is legally owed.',inputSchema:{type:'object',required:['purchase_age_days'],properties:{purchase_age_days:{type:'number',minimum:0},return_window_days:{type:['number','null'],minimum:0},item_defective:{type:'boolean'},service_not_delivered:{type:'boolean'},duplicate_charge:{type:'boolean'},unauthorized_charge:{type:'boolean'},auto_renewal_days_ago:{type:['number','null'],minimum:0},cancellation_requested_before_renewal:{type:'boolean'},policy_allows_exception:{type:'boolean'}}}},
+  {name:'calculate_potential_recovery',description:'Add the user-provided refundable amount, eligible fees, and additional credits to show a potential recovery total. This performs arithmetic only and does not determine legal entitlement.',inputSchema:{type:'object',required:['base_amount'],properties:{currency:{type:'string'},base_amount:{type:'number',minimum:0},refundable_fees:{type:'number',minimum:0},additional_credits:{type:'number',minimum:0}}}}
+];
+module.exports=createMcpHandler({name:'refundradar',instructions:'RefundRadar helps users identify plausible refund, return, warranty, cancellation, duplicate-charge and non-delivery routes based on current policies and supplied facts. It is not legal advice.',tools,callTool:(n,a)=>n==='assess_refund_case'?assessRefund(a):recoveryAmount(a)});
