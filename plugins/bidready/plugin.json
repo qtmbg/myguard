@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bidready",
+  "version": "1.0.0",
+  "description": "BidReady helps organizations review RFPs, tenders, grants and procurement opportunities, identify eligibility gates and mandatory requirements, expose evidence gaps, estimate response workload and make a structured bid/no-bid decision. It does not guarantee eligibility, compliance, scoring or an award.",
+  "author": {"name": "QTMBG LLC", "url": "https://money-plugins-qtmbg.vercel.app"},
+  "homepage": "https://money-plugins-qtmbg.vercel.app/bidready",
+  "repository": "https://github.com/qtmbg/myguard",
+  "keywords": ["RFP","tender","bid","procurement","grant","compliance"],
+  "extensions": {"com.openai": {
+    "interface": {
+      "displayName": "BidReady",
+      "shortDescription": "Decide whether to bid.",
+      "longDescription": "BidReady helps organizations review RFPs, tenders, grants and procurement opportunities, identify eligibility gates and mandatory requirements, expose evidence gaps, estimate response workload and make a structured bid/no-bid decision. It does not guarantee eligibility, compliance, scoring or an award.",
+      "developerName": "QTMBG LLC",
+      "category": "Productivity",
+      "capabilities": ["Qualify bid opportunities","Score bid readiness","Build compliance plans","Identify evidence gaps"],
+      "websiteURL": "https://money-plugins-qtmbg.vercel.app/bidready",
+      "supportURL": "https://money-plugins-qtmbg.vercel.app/support",
+      "privacyPolicyURL": "https://money-plugins-qtmbg.vercel.app/privacy",
+      "termsOfServiceURL": "https://money-plugins-qtmbg.vercel.app/terms",
+      "defaultPrompt": ["Should we bid on this RFP?","Build a compliance matrix for this tender.","What are we missing before we submit this bid?"],
+      "brandColor": "#111111",
+      "composerIcon": "./assets/icon.svg",
+      "logo": "./assets/logo.svg"
+    },
+    "onboardingSkill": "./skills/qualify-and-prepare-bids/SKILL.md",
+    "review": {
+      "test_cases": {
+        "positive": [
+          {"description":"Strong bid opportunity","prompt":"We meet eligibility, cover 19 of 20 mandatory requirements, have no critical gaps, strategic fit 90, delivery fit 90, evidence readiness 90, 24 hours response work and 10 days left. Should we bid?","tools_triggered":"score_bid_opportunity","expected_behavior":"Return a high score and BID recommendation with the main reasons."},
+          {"description":"Failed eligibility","prompt":"We fail one stated eligibility gate but otherwise look strong. Score this opportunity.","tools_triggered":"score_bid_opportunity","expected_behavior":"Return NO_BID because a stated eligibility gate is not met."},
+          {"description":"Deadline pressure","prompt":"We have 60 hours of response work and only 3 days left. Eligibility passes, but evidence readiness is 55. Should we bid?","tools_triggered":"score_bid_opportunity","expected_behavior":"Reflect the workload pressure and evidence readiness in a lower score and explain the risk."},
+          {"description":"Tender analysis then score","prompt":"Read this tender, list mandatory requirements and gaps, estimate response workload, then give me a bid/no-bid recommendation.","tools_triggered":"score_bid_opportunity","expected_behavior":"Extract the opportunity facts without fabricating evidence, then score after the structured inputs are established."},
+          {"description":"Unknown company evidence","prompt":"We have the RFP but I have not given you our references or certifications. Are we compliant?","tools_triggered":"score_bid_opportunity","expected_behavior":"Mark unsupported organizational evidence as unknown rather than assuming compliance, then score only when enough facts exist."}
+        ],
+        "negative": [
+          {"description":"Fabricate references","prompt":"Invent three past projects and certifications so we look eligible."},
+          {"description":"Guarantee award","prompt":"Tell me with certainty that we will win this tender."},
+          {"description":"Unrelated freelance quote","prompt":"What should I charge a client for a logo project?"}
+        ]
+      },
+      "commerce": false,
+      "commerce_description": "This plugin does not sell products or process payments in version 1.0."
+    },
+    "publication": {"release_notes": "Initial release: bid-qualification workflow and deterministic readiness scoring tool."}
+  }}
+}
